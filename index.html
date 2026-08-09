@@ -1712,334 +1712,101 @@
 
 
 
-    /* v35: spine typography + clearer reading bookmark */
-    .spine-title{
-      top:11.5%!important;
-      bottom:9%!important;
-      font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Meiryo",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-      font-weight:600!important;
-      font-size:clamp(.58rem,1.42vw,.80rem)!important;
-      line-height:1.08!important;
-      letter-spacing:.015em!important;
-      color:#302d29!important;
-      text-shadow:none!important;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-    .spine-title.title-medium{font-size:clamp(.53rem,1.25vw,.72rem)!important;letter-spacing:.008em!important}
-    .spine-title.title-long{font-size:clamp(.48rem,1.09vw,.65rem)!important;letter-spacing:0!important;line-height:1.05!important}
-    .spine-title.title-xlong{font-size:clamp(.43rem,.98vw,.59rem)!important;letter-spacing:-.006em!important;line-height:1.02!important}
+    
+    /* =========================================================
+       Yonda? bookshelf final definition
+       - title: horizontally centered / vertically top-aligned
+       - long titles: naturally split into 2–3 vertical columns
+       - bookmark: narrow paper tag + always-visible knot/twin cords
+       - shelf artwork: original image only; no added CSS shadow/filter
+       ========================================================= */
 
     .reorder-spine-title{
       font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Meiryo",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
       font-weight:600!important;
-      color:#302d29!important;
+      color:rgba(45,40,34,.88)!important;
       letter-spacing:.01em!important;
-    }
-
-    /* Use a simple cloth ribbon silhouette instead of the small image tip. */
-    .reading-ribbon{display:none!important}
-    .spine-wrap.is-reading::before{
-      content:"";
-      position:absolute;
-      z-index:7;
-      left:64%;
-      top:-13px;
-      width:25%;
-      min-width:8px;
-      max-width:14px;
-      height:24px;
-      transform:translateX(-50%);
-      background:linear-gradient(90deg,#d9b96f 0%,#f0d28d 46%,#d5ae5d 100%);
-      border:1px solid rgba(126,91,35,.28);
-      border-bottom:0;
-      clip-path:polygon(0 0,100% 0,100% 100%,50% 72%,0 100%);
-      box-shadow:0 1px 1px rgba(70,50,24,.10);
-      pointer-events:none;
-    }
-    .spine-wrap.is-reading::after{
-      content:"";
-      position:absolute;
-      z-index:8;
-      left:64%;
-      top:-11px;
-      width:1px;
-      height:14px;
-      transform:translateX(-50%);
-      background:rgba(255,248,221,.48);
-      pointer-events:none;
-    }
-
-    @media(max-width:620px){
-      .spine-title{
-        top:10.5%!important;
-        bottom:8%!important;
-        font-weight:700!important;
-        font-size:clamp(.49rem,2.22vw,.64rem)!important;
-        line-height:1.06!important;
-        letter-spacing:.006em!important;
-      }
-      .spine-title.title-medium{font-size:clamp(.45rem,2.02vw,.59rem)!important}
-      .spine-title.title-long{font-size:clamp(.41rem,1.84vw,.54rem)!important;line-height:1.03!important}
-      .spine-title.title-xlong{font-size:clamp(.38rem,1.69vw,.50rem)!important;line-height:1.01!important}
-      .spine-wrap.is-reading::before{
-        left:64%;
-        top:-10px;
-        width:27%;
-        min-width:7px;
-        max-width:11px;
-        height:19px;
-      }
-      .spine-wrap.is-reading::after{top:-8px;height:11px}
-    }
-
-
-    /* v36: mobile title fit, pressed-ink lettering, bookmark fully above spine */
-    .spine-title{
-      top:9%!important;
-      bottom:7.5%!important;
-      left:9%!important;
-      right:9%!important;
-      width:auto!important;
-      height:auto!important;
-      max-width:none!important;
-      max-height:none!important;
-      transform:none!important;
-      overflow:hidden!important;
-      white-space:normal!important;
-      overflow-wrap:anywhere!important;
-      word-break:normal!important;
-      font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Meiryo",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-      font-weight:600!important;
-      font-size:clamp(.57rem,1.38vw,.79rem)!important;
-      line-height:1.06!important;
-      letter-spacing:.006em!important;
-      color:rgba(45,40,34,.88)!important;
-      -webkit-text-stroke:.10px rgba(41,35,29,.22);
-      text-shadow:
-        0 .35px 0 rgba(255,250,238,.34),
-        0 -.35px .35px rgba(79,65,51,.18)!important;
-      mix-blend-mode:multiply;
-      opacity:.96;
-      text-rendering:geometricPrecision;
-      -webkit-font-smoothing:antialiased;
-    }
-    .spine-title.title-medium{font-size:clamp(.51rem,1.20vw,.70rem)!important;letter-spacing:.002em!important}
-    .spine-title.title-long{font-size:clamp(.455rem,1.04vw,.63rem)!important;letter-spacing:-.004em!important;line-height:1.025!important}
-    .spine-title.title-xlong{font-size:clamp(.405rem,.92vw,.56rem)!important;letter-spacing:-.008em!important;line-height:1.0!important}
-
-    .reorder-spine-title{
-      color:rgba(45,40,34,.88)!important;
-      font-weight:600!important;
       -webkit-text-stroke:.08px rgba(41,35,29,.18);
       text-shadow:0 .3px 0 rgba(255,250,238,.28),0 -.3px .3px rgba(79,65,51,.14)!important;
       mix-blend-mode:multiply;
     }
 
-    /* Bookmark: the whole ribbon sits above the spine; the notch is on its upper edge. */
-    .spine-wrap.is-reading::before{
-      content:"";
-      position:absolute;
-      z-index:7;
-      left:66%;
-      top:-19px;
-      width:26%;
-      min-width:8px;
-      max-width:14px;
-      height:19px;
-      transform:translateX(-50%);
-      background:linear-gradient(90deg,#cfae68 0%,#e3c47f 45%,#c7a45e 100%);
-      border:1px solid rgba(113,83,42,.25);
-      border-bottom-color:rgba(113,83,42,.18);
-      clip-path:polygon(0 0,37% 0,50% 25%,63% 0,100% 0,100% 100%,0 100%);
-      box-shadow:0 -1px 0 rgba(255,246,216,.30) inset;
-      pointer-events:none;
-    }
-    .spine-wrap.is-reading::after{
-      content:"";
-      position:absolute;
-      z-index:8;
-      left:66%;
-      top:-15px;
-      width:1px;
-      height:12px;
-      transform:translateX(-50%);
-      background:rgba(255,246,216,.34);
-      pointer-events:none;
-    }
-
-    @media(max-width:620px){
-      .spine-title{
-        top:7.5%!important;
-        bottom:6.5%!important;
-        left:7%!important;
-        right:7%!important;
-        font-weight:650!important;
-        font-size:clamp(.43rem,1.92vw,.58rem)!important;
-        line-height:1.02!important;
-        letter-spacing:-.003em!important;
-        -webkit-text-stroke:.14px rgba(41,35,29,.24);
-        text-shadow:0 .3px 0 rgba(255,250,238,.32),0 -.3px .3px rgba(79,65,51,.18)!important;
-      }
-      .spine-title.title-medium{font-size:clamp(.395rem,1.72vw,.53rem)!important;letter-spacing:-.006em!important}
-      .spine-title.title-long{font-size:clamp(.35rem,1.52vw,.475rem)!important;letter-spacing:-.010em!important;line-height:.99!important}
-      .spine-title.title-xlong{font-size:clamp(.305rem,1.34vw,.425rem)!important;letter-spacing:-.014em!important;line-height:.96!important}
-      .spine-wrap.is-reading::before{
-        left:66%;
-        top:-15px;
-        min-width:7px;
-        max-width:11px;
-        height:15px;
-      }
-      .spine-wrap.is-reading::after{
-        left:66%;
-        top:-12px;
-        height:9px;
-      }
-    }
-
-
-    /* v37: centered spine titles + cord bookmark fully above the book */
-    .spine-title{
-      top:50%!important;
-      bottom:auto!important;
-      left:50%!important;
-      right:auto!important;
-      width:auto!important;
-      height:78%!important;
-      max-width:82%!important;
-      max-height:78%!important;
-      transform:translate(-50%,-50%)!important;
-      display:flex!important;
-      align-items:center!important;
-      justify-content:center!important;
-      text-align:center!important;
-      text-align-last:center!important;
-      overflow:hidden!important;
-      white-space:normal!important;
-      overflow-wrap:anywhere!important;
-      word-break:normal!important;
-      color:rgba(43,38,33,.86)!important;
-      font-weight:600!important;
-      -webkit-text-stroke:.08px rgba(38,31,26,.16)!important;
-      text-shadow:
-        .25px .25px .25px rgba(255,252,243,.28),
-        -.25px -.25px .28px rgba(67,52,40,.13)!important;
-      mix-blend-mode:multiply!important;
-      opacity:.94!important;
-    }
-
-    /* The old image ribbon is intentionally hidden; v37 draws a quieter cord bookmark. */
-    .reading-ribbon{display:none!important}
-
-    /* Cord: a thin loop rising above the top edge of the book. */
-    .spine-wrap.is-reading::before{
-      content:""!important;
-      position:absolute!important;
-      z-index:8!important;
-      left:58%!important;
-      top:-27px!important;
-      width:10px!important;
-      min-width:0!important;
-      max-width:none!important;
-      height:17px!important;
-      transform:translateX(-50%) rotate(8deg)!important;
-      background:transparent!important;
-      border:2px solid rgba(93,65,40,.84)!important;
-      border-bottom:0!important;
-      border-radius:9px 9px 2px 2px!important;
-      box-shadow:none!important;
-      clip-path:none!important;
-      pointer-events:none!important;
-    }
-
-    /* Small fabric/paper tag at the end of the cord; its lower edge remains above the spine. */
-    .spine-wrap.is-reading::after{
-      content:""!important;
-      position:absolute!important;
-      z-index:9!important;
-      left:58%!important;
-      top:-13px!important;
-      width:12px!important;
-      min-width:0!important;
-      max-width:none!important;
-      height:12px!important;
-      transform:translateX(-50%)!important;
-      background:#d9aa54!important;
-      border:1px solid rgba(117,81,38,.25)!important;
-      border-radius:1px 1px 2px 2px!important;
-      /* V-shaped cut is on the upper edge, not the lower edge. */
-      clip-path:polygon(0 0,37% 0,50% 24%,63% 0,100% 0,100% 100%,0 100%)!important;
-      box-shadow:inset 1px 0 rgba(255,244,202,.24),inset -1px 0 rgba(99,66,31,.08)!important;
-      pointer-events:none!important;
-    }
-
-    @media(max-width:620px){
-      .spine-title{
-        top:50%!important;
-        height:80%!important;
-        max-height:80%!important;
-        max-width:86%!important;
-        transform:translate(-50%,-50%)!important;
-        font-weight:650!important;
-        line-height:1.01!important;
-      }
-      .spine-title.title-medium{font-size:clamp(.40rem,1.74vw,.53rem)!important}
-      .spine-title.title-long{font-size:clamp(.35rem,1.50vw,.465rem)!important;line-height:.98!important}
-      .spine-title.title-xlong{font-size:clamp(.30rem,1.28vw,.405rem)!important;line-height:.95!important}
-      .spine-wrap.is-reading::before{
-        left:58%!important;
-        top:-22px!important;
-        width:8px!important;
-        height:14px!important;
-        border-width:1.5px!important;
-      }
-      .spine-wrap.is-reading::after{
-        left:58%!important;
-        top:-10px!important;
-        width:9px!important;
-        height:9px!important;
-      }
-    }
-
-  
-    /* v38: top-centered titles, clean shelf contact, narrow paper bookmark with twin cords */
-    .spine-title{
-      top:14.5%!important;
-      bottom:auto!important;
-      left:50%!important;
-      right:auto!important;
-      width:max-content!important;
-      height:72%!important;
-      max-width:84%!important;
-      max-height:72%!important;
-      transform:translateX(-50%)!important;
-      display:block!important;
-      text-align:start!important;
-      text-align-last:auto!important;
-      overflow:hidden!important;
-      writing-mode:vertical-rl!important;
-      text-orientation:mixed!important;
-    }
-
-    /* The shelf image itself now has no baked-in offset book shadows. */
     .shelf-board-art{
-      z-index:4!important;
       filter:none!important;
       box-shadow:none!important;
     }
 
-    /* Paper tag: roughly 20% of the spine width and fully above the top edge. */
+    .spine-title{
+      position:absolute!important;
+      z-index:5!important;
+      top:12.5%!important;
+      left:50%!important;
+      right:auto!important;
+      bottom:auto!important;
+      transform:translateX(-50%)!important;
+
+      display:inline-flex!important;
+      flex-direction:row-reverse!important;
+      align-items:flex-start!important;
+      justify-content:center!important;
+      gap:2px!important;
+
+      width:max-content!important;
+      max-width:96%!important;
+      height:auto!important;
+      max-height:none!important;
+      margin:0!important;
+      padding:0!important;
+
+      writing-mode:horizontal-tb!important;
+      overflow:visible!important;
+      white-space:normal!important;
+
+      font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Meiryo",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+      font-weight:600!important;
+      font-size:clamp(.56rem,1.30vw,.76rem)!important;
+      line-height:1!important;
+      letter-spacing:.005em!important;
+      color:rgba(45,40,34,.89)!important;
+      -webkit-text-stroke:.08px rgba(41,35,29,.18);
+      text-shadow:
+        .22px .22px .28px rgba(255,252,243,.26),
+        -.22px -.22px .28px rgba(67,52,40,.11)!important;
+      mix-blend-mode:multiply!important;
+      opacity:.96!important;
+      text-rendering:geometricPrecision;
+      -webkit-font-smoothing:antialiased;
+      pointer-events:none!important;
+    }
+
+    .spine-title-col{
+      display:block!important;
+      flex:0 0 auto!important;
+      writing-mode:vertical-rl!important;
+      text-orientation:mixed!important;
+      white-space:nowrap!important;
+      margin:0!important;
+      padding:0!important;
+      line-height:1!important;
+      letter-spacing:inherit!important;
+      text-align:start!important;
+      overflow:visible!important;
+    }
+
+    .spine-title.title-medium{font-size:clamp(.52rem,1.18vw,.70rem)!important}
+    .spine-title.title-long{font-size:clamp(.48rem,1.08vw,.65rem)!important}
+    .spine-title.title-xlong{font-size:clamp(.44rem,.99vw,.60rem)!important}
+
     .reading-ribbon{
       display:block!important;
       position:absolute!important;
-      z-index:10!important;
+      z-index:12!important;
       left:58%!important;
-      top:-19px!important;
-      width:20%!important;
-      min-width:5px!important;
-      max-width:9px!important;
-      height:19px!important;
+      top:-21px!important;
+      width:26%!important;
+      min-width:7px!important;
+      max-width:11px!important;
+      height:21px!important;
       transform:translateX(-50%)!important;
       background:#d8ba79!important;
       border:1px solid rgba(112,82,45,.28)!important;
@@ -2047,135 +1814,15 @@
       box-shadow:
         inset 1px 0 rgba(255,250,224,.34),
         inset -1px 0 rgba(102,72,39,.08)!important;
-      clip-path:none!important;
+      overflow:visible!important;
       pointer-events:none!important;
       user-select:none!important;
     }
 
-    /* Tiny punched hole where the two cords emerge. */
-    .reading-ribbon::before{
-      content:"";
-      position:absolute;
-      left:50%;
-      top:3px;
-      width:2px;
-      height:2px;
-      transform:translateX(-50%);
-      border-radius:50%;
-      background:rgba(100,73,44,.58);
-      box-shadow:0 0 0 .5px rgba(255,249,222,.45);
-    }
-
-    .spine-wrap:not(.is-reading) .reading-ribbon{display:none!important}
-
-    /* Two separate thin cords, like a real paper bookmark tag. */
-    .spine-wrap.is-reading::before,
-    .spine-wrap.is-reading::after{
-      content:""!important;
-      position:absolute!important;
-      z-index:9!important;
-      top:-32px!important;
-      width:1.5px!important;
-      min-width:0!important;
-      max-width:none!important;
-      height:15px!important;
-      background:#735238!important;
-      border:0!important;
-      border-radius:999px!important;
-      box-shadow:none!important;
-      clip-path:none!important;
-      pointer-events:none!important;
-      transform-origin:bottom center!important;
-    }
-    .spine-wrap.is-reading::before{
-      left:56.5%!important;
-      transform:translateX(-50%) rotate(-11deg)!important;
-    }
-    .spine-wrap.is-reading::after{
-      left:59.5%!important;
-      transform:translateX(-50%) rotate(11deg)!important;
-    }
-
-    @media(max-width:620px){
-      .spine-title{
-        top:13.5%!important;
-        height:74%!important;
-        max-height:74%!important;
-        max-width:88%!important;
-        transform:translateX(-50%)!important;
-      }
-      .reading-ribbon{
-        top:-15px!important;
-        width:20%!important;
-        min-width:4px!important;
-        max-width:7px!important;
-        height:15px!important;
-      }
-      .reading-ribbon::before{
-        top:2px;
-        width:1.5px;
-        height:1.5px;
-      }
-      .spine-wrap.is-reading::before,
-      .spine-wrap.is-reading::after{
-        top:-26px!important;
-        width:1px!important;
-        height:12px!important;
-      }
-      .spine-wrap.is-reading::before{left:56.5%!important}
-      .spine-wrap.is-reading::after{left:59.5%!important}
-    }
-
-  
-    /* v39: smartphone horizontal clipping fix + clearer bookmark */
-    .spine-title{
-      top:12.5%!important;
-      left:50%!important;
-      right:auto!important;
-      bottom:auto!important;
-      width:calc(100% - 4px)!important;
-      max-width:none!important;
-      height:80%!important;
-      max-height:80%!important;
-      padding-left:1px!important;
-      padding-right:1px!important;
-      margin:0!important;
-      box-sizing:border-box!important;
-      transform:translateX(-50%)!important;
-      text-align:start!important;
-      text-align-last:auto!important;
-      overflow:hidden!important;
-      white-space:normal!important;
-      writing-mode:vertical-rl!important;
-      text-orientation:mixed!important;
-    }
-
-    /* Give titles that wrap into multiple vertical columns enough horizontal room. */
-    .spine-title.title-medium{
-      line-height:1.08!important;
-    }
-    .spine-title.title-long{
-      line-height:1.00!important;
-    }
-    .spine-title.title-xlong{
-      line-height:.94!important;
-    }
-
-    /* Slightly broader paper bookmark. */
-    .reading-ribbon{
-      left:58%!important;
-      top:-21px!important;
-      width:26%!important;
-      min-width:7px!important;
-      max-width:11px!important;
-      height:21px!important;
-      overflow:visible!important;
-    }
-
-    /* Punched hole. */
     .reading-ribbon::before{
       content:""!important;
       position:absolute!important;
+      z-index:14!important;
       left:50%!important;
       top:3px!important;
       width:2.4px!important;
@@ -2184,15 +1831,12 @@
       border-radius:50%!important;
       background:#6f5038!important;
       box-shadow:0 0 0 .7px rgba(255,247,218,.70)!important;
-      opacity:1!important;
-      visibility:visible!important;
-      z-index:14!important;
     }
 
-    /* Knot: always visible, independent of hover/selection state. */
     .reading-ribbon::after{
       content:""!important;
       position:absolute!important;
+      z-index:15!important;
       left:50%!important;
       top:-1.5px!important;
       width:4px!important;
@@ -2201,22 +1845,30 @@
       border-radius:55% 55% 48% 48%!important;
       background:#765438!important;
       box-shadow:0 .4px .6px rgba(55,38,24,.18)!important;
-      opacity:1!important;
-      visibility:visible!important;
-      z-index:15!important;
     }
+
+    .spine-wrap:not(.is-reading) .reading-ribbon{display:none!important}
 
     .spine-wrap.is-reading::before,
     .spine-wrap.is-reading::after{
-      z-index:13!important;
+      content:""!important;
+      position:absolute!important;
+      z-index:11!important;
       top:-35px!important;
       width:1.7px!important;
       height:17px!important;
+      min-width:0!important;
+      max-width:none!important;
+      background:#725039!important;
+      border:0!important;
+      border-radius:999px!important;
+      box-shadow:none!important;
+      clip-path:none!important;
+      pointer-events:none!important;
+      transform-origin:bottom center!important;
       opacity:1!important;
       visibility:visible!important;
-      background:#725039!important;
     }
-
     .spine-wrap.is-reading::before{
       left:56.2%!important;
       transform:translateX(-50%) rotate(-10deg)!important;
@@ -2227,31 +1879,29 @@
     }
 
     @media(max-width:620px){
-      /* The previous issue was LEFT/RIGHT clipping when long vertical titles formed
-         multiple columns. Keep almost the full spine width available. */
       .spine-title{
-        top:10.5%!important;
-        width:calc(100% - 2px)!important;
-        max-width:none!important;
-        height:84%!important;
-        max-height:84%!important;
-        padding-left:1px!important;
-        padding-right:1px!important;
-        overflow:hidden!important;
+        top:8.5%!important;
+        left:50%!important;
+        transform:translateX(-50%)!important;
+        max-width:99%!important;
+        gap:1px!important;
+        font-weight:650!important;
+        font-size:clamp(.48rem,2.02vw,.61rem)!important;
+        letter-spacing:0!important;
       }
 
       .spine-title.title-medium{
-        font-size:clamp(.385rem,1.66vw,.515rem)!important;
-        line-height:1.04!important;
+        font-size:clamp(.45rem,1.90vw,.58rem)!important;
       }
       .spine-title.title-long{
-        font-size:clamp(.335rem,1.44vw,.455rem)!important;
-        line-height:.96!important;
+        font-size:clamp(.42rem,1.78vw,.55rem)!important;
       }
       .spine-title.title-xlong{
-        font-size:clamp(.285rem,1.22vw,.39rem)!important;
-        line-height:.90!important;
-        letter-spacing:-.016em!important;
+        font-size:clamp(.39rem,1.64vw,.51rem)!important;
+      }
+
+      .spine-title-col{
+        line-height:.94!important;
       }
 
       .reading-ribbon{
@@ -2279,164 +1929,6 @@
       }
       .spine-wrap.is-reading::before{left:56%!important}
       .spine-wrap.is-reading::after{left:60%!important}
-    }
-
-  
-    /* v40: exact title placement + restore original full-depth shelf artwork */
-    .spine-title{
-      position:absolute!important;
-      top:13%!important;
-      left:50%!important;
-      right:auto!important;
-      bottom:auto!important;
-      transform:translateX(-50%)!important;
-
-      /* horizontal centering on the spine */
-      width:max-content!important;
-      max-width:calc(100% - 6px)!important;
-
-      /* vertical placement starts near the top, not centered */
-      height:78%!important;
-      max-height:78%!important;
-      margin:0!important;
-      padding:0!important;
-
-      display:block!important;
-      writing-mode:vertical-rl!important;
-      text-orientation:mixed!important;
-      text-align:start!important;
-      text-align-last:auto!important;
-      overflow:hidden!important;
-      white-space:normal!important;
-    }
-
-    /* Keep multi-column long titles centered without touching either side edge. */
-    .spine-title.title-medium{
-      line-height:1.05!important;
-    }
-    .spine-title.title-long{
-      line-height:.96!important;
-    }
-    .spine-title.title-xlong{
-      line-height:.89!important;
-    }
-
-    /* Do not flatten/crop/replace the restored shelf artwork. */
-    .shelf-board-art{
-      filter:none!important;
-      box-shadow:none!important;
-    }
-
-    @media(max-width:620px){
-      .spine-title{
-        top:11%!important;
-        left:50%!important;
-        transform:translateX(-50%)!important;
-        width:max-content!important;
-        max-width:calc(100% - 5px)!important;
-        height:82%!important;
-        max-height:82%!important;
-        padding:0!important;
-        overflow:hidden!important;
-      }
-
-      /* Smartphone issue is left/right clipping, so reduce column width,
-         while keeping the title top-aligned and horizontally centered. */
-      .spine-title.title-medium{
-        font-size:clamp(.37rem,1.56vw,.49rem)!important;
-        line-height:1.00!important;
-      }
-      .spine-title.title-long{
-        font-size:clamp(.315rem,1.34vw,.425rem)!important;
-        line-height:.91!important;
-      }
-      .spine-title.title-xlong{
-        font-size:clamp(.265rem,1.13vw,.36rem)!important;
-        line-height:.84!important;
-        letter-spacing:-.018em!important;
-      }
-    }
-
-  
-    /* v42: explicit title columns; original shelf artwork untouched */
-    .shelf-board-art{
-      filter:none!important;
-      box-shadow:none!important;
-    }
-
-    /* The whole title block is horizontally centered and vertically top-aligned. */
-    .spine-title{
-      position:absolute!important;
-      top:12%!important;
-      left:50%!important;
-      right:auto!important;
-      bottom:auto!important;
-      transform:translateX(-50%)!important;
-
-      width:96%!important;
-      max-width:96%!important;
-      height:auto!important;
-      max-height:none!important;
-      margin:0!important;
-      padding:0!important;
-
-      display:flex!important;
-      flex-direction:row-reverse!important;
-      justify-content:center!important;
-      align-items:flex-start!important;
-      gap:1px!important;
-
-      writing-mode:horizontal-tb!important;
-      overflow:visible!important;
-      white-space:normal!important;
-      color:var(--spine-text,#2f2a25)!important;
-      pointer-events:none!important;
-    }
-
-    .spine-title-col{
-      display:block!important;
-      flex:0 0 auto!important;
-      writing-mode:vertical-rl!important;
-      text-orientation:mixed!important;
-      white-space:nowrap!important;
-      line-height:1!important;
-      letter-spacing:.01em!important;
-      text-align:start!important;
-      overflow:visible!important;
-      max-height:none!important;
-    }
-
-    .spine-title.title-medium{font-size:clamp(.50rem,1.18vw,.69rem)!important}
-    .spine-title.title-long{font-size:clamp(.46rem,1.05vw,.62rem)!important}
-    .spine-title.title-xlong{font-size:clamp(.42rem,.96vw,.56rem)!important}
-
-    @media(max-width:620px){
-      .spine-title{
-        top:9.5%!important;
-        left:50%!important;
-        transform:translateX(-50%)!important;
-
-        /* Use nearly the full visible spine width for 2–3 title columns. */
-        width:98%!important;
-        max-width:98%!important;
-        gap:0!important;
-        overflow:visible!important;
-      }
-
-      .spine-title-col{
-        line-height:.92!important;
-        letter-spacing:0!important;
-      }
-
-      .spine-title.title-medium{
-        font-size:clamp(.40rem,1.78vw,.54rem)!important;
-      }
-      .spine-title.title-long{
-        font-size:clamp(.36rem,1.60vw,.49rem)!important;
-      }
-      .spine-title.title-xlong{
-        font-size:clamp(.325rem,1.43vw,.445rem)!important;
-      }
     }
 
   </style>
@@ -3624,19 +3116,71 @@
     }
 
     function splitSpineTitle(title){
-      const chars=[...String(title||"")];
+      const text=String(title||"").trim();
+      const chars=[...text];
       const length=chars.length;
-      const columns=length<=12 ? 1 : length<=24 ? 2 : 3;
-      const base=Math.floor(length/columns);
-      const extra=length%columns;
-      const chunks=[];
-      let cursor=0;
-      for(let i=0;i<columns;i++){
-        const size=base+(i<extra?1:0);
-        chunks.push(chars.slice(cursor,cursor+size).join(""));
-        cursor+=size;
+      if(length<=13) return [text];
+
+      const columns=length<=26 ? 2 : 3;
+      const preferredAfter=new Set([
+        "、","。","・","･","！","!","？","?","：",":","／","/",
+        "）",")","」","』","】","〉","》"," ","　",
+        "の","は","を","に","へ","が","と","で","も","や"
+      ]);
+
+      function boundaryPenalty(pos,target){
+        const before=chars[pos-1]||"";
+        const after=chars[pos]||"";
+        let score=Math.abs(pos-target)*3;
+        if(preferredAfter.has(before)) score-=9;
+        if(/[、。・･！？!?：:／/\s]/.test(after)) score-=5;
+        if(pos<5 || length-pos<5) score+=18;
+        return score;
       }
-      return chunks.filter(Boolean);
+
+      if(columns===2){
+        const target=length/2;
+        let best=6;
+        let bestScore=Infinity;
+        for(let i=5;i<=length-5;i++){
+          const score=boundaryPenalty(i,target);
+          if(score<bestScore){
+            best=i;
+            bestScore=score;
+          }
+        }
+        return [
+          chars.slice(0,best).join("").trim(),
+          chars.slice(best).join("").trim()
+        ].filter(Boolean);
+      }
+
+      const target1=length/3;
+      const target2=length*2/3;
+      let bestI=6, bestJ=Math.max(12,length-6), bestScore=Infinity;
+      for(let i=5;i<=length-10;i++){
+        for(let j=i+5;j<=length-5;j++){
+          const part1=i;
+          const part2=j-i;
+          const part3=length-j;
+          const balance=Math.max(part1,part2,part3)-Math.min(part1,part2,part3);
+          const score=
+            boundaryPenalty(i,target1)+
+            boundaryPenalty(j,target2)+
+            balance*2;
+          if(score<bestScore){
+            bestI=i;
+            bestJ=j;
+            bestScore=score;
+          }
+        }
+      }
+
+      return [
+        chars.slice(0,bestI).join("").trim(),
+        chars.slice(bestI,bestJ).join("").trim(),
+        chars.slice(bestJ).join("").trim()
+      ].filter(Boolean);
     }
 
     function spineTitleHtml(title){
