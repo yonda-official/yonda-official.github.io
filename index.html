@@ -1931,6 +1931,51 @@
       .spine-wrap.is-reading::after{left:60%!important}
     }
 
+  
+    /* v44: prioritize 1 column, then 2; use full spine width safely */
+    .spine-title{
+      top:10.5%!important;
+      max-width:99.5%!important;
+      gap:1px!important;
+    }
+
+    .spine-title-col{
+      line-height:.96!important;
+    }
+
+    /* One-column titles can use a slightly larger, more book-like size. */
+    .spine-title:not(.title-long):not(.title-xlong){
+      font-size:clamp(.55rem,1.26vw,.74rem)!important;
+    }
+
+    @media(max-width:620px){
+      .spine-title{
+        top:7.5%!important;
+        max-width:100%!important;
+        gap:0!important;
+        padding:0!important;
+      }
+
+      .spine-title-col{
+        line-height:.90!important;
+      }
+
+      /* Keep smartphone text readable; long titles should wrap to 2 columns
+         before being shrunk aggressively. */
+      .spine-title:not(.title-long):not(.title-xlong){
+        font-size:clamp(.47rem,2.05vw,.61rem)!important;
+      }
+      .spine-title.title-medium{
+        font-size:clamp(.44rem,1.92vw,.58rem)!important;
+      }
+      .spine-title.title-long{
+        font-size:clamp(.41rem,1.78vw,.54rem)!important;
+      }
+      .spine-title.title-xlong{
+        font-size:clamp(.38rem,1.64vw,.50rem)!important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -3119,55 +3164,73 @@
       const text=String(title||"").trim();
       const chars=[...text];
       const length=chars.length;
-      if(length<=13) return [text];
 
-      const columns=length<=26 ? 2 : 3;
+      // Priority:
+      // 1) keep one vertical line whenever it remains readable
+      // 2) otherwise use two lines
+      // 3) three lines only for exceptionally long titles
+      if(length<=20) return [text];
+
+      const columns=length<=40 ? 2 : 3;
       const preferredAfter=new Set([
         "、","。","・","･","！","!","？","?","：",":","／","/",
         "）",")","」","』","】","〉","》"," ","　",
         "の","は","を","に","へ","が","と","で","も","や"
       ]);
 
-      function boundaryPenalty(pos,target){
+      function boundaryPenalty(pos,target,minPiece){
         const before=chars[pos-1]||"";
         const after=chars[pos]||"";
-        let score=Math.abs(pos-target)*3;
-        if(preferredAfter.has(before)) score-=9;
-        if(/[、。・･！？!?：:／/\s]/.test(after)) score-=5;
-        if(pos<5 || length-pos<5) score+=18;
+        let score=Math.abs(pos-target)*4;
+
+        // Natural Japanese break points matter, but only after
+        // choosing the minimum number of columns.
+        if(preferredAfter.has(before)) score-=8;
+        if(/[、。・･！？!?：:／/\s]/.test(after)) score-=4;
+
+        if(pos<minPiece || length-pos<minPiece) score+=30;
         return score;
       }
 
       if(columns===2){
         const target=length/2;
-        let best=6;
+        const minPiece=Math.max(7,Math.floor(length*.28));
+        let best=Math.round(target);
         let bestScore=Infinity;
-        for(let i=5;i<=length-5;i++){
-          const score=boundaryPenalty(i,target);
+
+        for(let i=minPiece;i<=length-minPiece;i++){
+          const score=boundaryPenalty(i,target,minPiece);
           if(score<bestScore){
             best=i;
             bestScore=score;
           }
         }
+
         return [
           chars.slice(0,best).join("").trim(),
           chars.slice(best).join("").trim()
         ].filter(Boolean);
       }
 
+      // Three columns are a last resort only.
       const target1=length/3;
       const target2=length*2/3;
-      let bestI=6, bestJ=Math.max(12,length-6), bestScore=Infinity;
-      for(let i=5;i<=length-10;i++){
-        for(let j=i+5;j<=length-5;j++){
-          const part1=i;
-          const part2=j-i;
-          const part3=length-j;
-          const balance=Math.max(part1,part2,part3)-Math.min(part1,part2,part3);
+      const minPiece=Math.max(7,Math.floor(length*.20));
+      let bestI=Math.round(target1);
+      let bestJ=Math.round(target2);
+      let bestScore=Infinity;
+
+      for(let i=minPiece;i<=length-minPiece*2;i++){
+        for(let j=i+minPiece;j<=length-minPiece;j++){
+          const p1=i;
+          const p2=j-i;
+          const p3=length-j;
+          const balance=Math.max(p1,p2,p3)-Math.min(p1,p2,p3);
           const score=
-            boundaryPenalty(i,target1)+
-            boundaryPenalty(j,target2)+
-            balance*2;
+            boundaryPenalty(i,target1,minPiece)+
+            boundaryPenalty(j,target2,minPiece)+
+            balance*3;
+
           if(score<bestScore){
             bestI=i;
             bestJ=j;
