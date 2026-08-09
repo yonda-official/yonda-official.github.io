@@ -1898,6 +1898,110 @@
       }
     }
 
+
+    /* v37: centered spine titles + cord bookmark fully above the book */
+    .spine-title{
+      top:50%!important;
+      bottom:auto!important;
+      left:50%!important;
+      right:auto!important;
+      width:auto!important;
+      height:78%!important;
+      max-width:82%!important;
+      max-height:78%!important;
+      transform:translate(-50%,-50%)!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      text-align:center!important;
+      text-align-last:center!important;
+      overflow:hidden!important;
+      white-space:normal!important;
+      overflow-wrap:anywhere!important;
+      word-break:normal!important;
+      color:rgba(43,38,33,.86)!important;
+      font-weight:600!important;
+      -webkit-text-stroke:.08px rgba(38,31,26,.16)!important;
+      text-shadow:
+        .25px .25px .25px rgba(255,252,243,.28),
+        -.25px -.25px .28px rgba(67,52,40,.13)!important;
+      mix-blend-mode:multiply!important;
+      opacity:.94!important;
+    }
+
+    /* The old image ribbon is intentionally hidden; v37 draws a quieter cord bookmark. */
+    .reading-ribbon{display:none!important}
+
+    /* Cord: a thin loop rising above the top edge of the book. */
+    .spine-wrap.is-reading::before{
+      content:""!important;
+      position:absolute!important;
+      z-index:8!important;
+      left:58%!important;
+      top:-27px!important;
+      width:10px!important;
+      min-width:0!important;
+      max-width:none!important;
+      height:17px!important;
+      transform:translateX(-50%) rotate(8deg)!important;
+      background:transparent!important;
+      border:2px solid rgba(93,65,40,.84)!important;
+      border-bottom:0!important;
+      border-radius:9px 9px 2px 2px!important;
+      box-shadow:none!important;
+      clip-path:none!important;
+      pointer-events:none!important;
+    }
+
+    /* Small fabric/paper tag at the end of the cord; its lower edge remains above the spine. */
+    .spine-wrap.is-reading::after{
+      content:""!important;
+      position:absolute!important;
+      z-index:9!important;
+      left:58%!important;
+      top:-13px!important;
+      width:12px!important;
+      min-width:0!important;
+      max-width:none!important;
+      height:12px!important;
+      transform:translateX(-50%)!important;
+      background:#d9aa54!important;
+      border:1px solid rgba(117,81,38,.25)!important;
+      border-radius:1px 1px 2px 2px!important;
+      /* V-shaped cut is on the upper edge, not the lower edge. */
+      clip-path:polygon(0 0,37% 0,50% 24%,63% 0,100% 0,100% 100%,0 100%)!important;
+      box-shadow:inset 1px 0 rgba(255,244,202,.24),inset -1px 0 rgba(99,66,31,.08)!important;
+      pointer-events:none!important;
+    }
+
+    @media(max-width:620px){
+      .spine-title{
+        top:50%!important;
+        height:80%!important;
+        max-height:80%!important;
+        max-width:86%!important;
+        transform:translate(-50%,-50%)!important;
+        font-weight:650!important;
+        line-height:1.01!important;
+      }
+      .spine-title.title-medium{font-size:clamp(.40rem,1.74vw,.53rem)!important}
+      .spine-title.title-long{font-size:clamp(.35rem,1.50vw,.465rem)!important;line-height:.98!important}
+      .spine-title.title-xlong{font-size:clamp(.30rem,1.28vw,.405rem)!important;line-height:.95!important}
+      .spine-wrap.is-reading::before{
+        left:58%!important;
+        top:-22px!important;
+        width:8px!important;
+        height:14px!important;
+        border-width:1.5px!important;
+      }
+      .spine-wrap.is-reading::after{
+        left:58%!important;
+        top:-10px!important;
+        width:9px!important;
+        height:9px!important;
+      }
+    }
+
   </style>
 </head>
 <body>
