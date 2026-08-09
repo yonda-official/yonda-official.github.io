@@ -2126,6 +2126,161 @@
       .spine-wrap.is-reading::after{left:59.5%!important}
     }
 
+  
+    /* v39: smartphone horizontal clipping fix + clearer bookmark */
+    .spine-title{
+      top:12.5%!important;
+      left:50%!important;
+      right:auto!important;
+      bottom:auto!important;
+      width:calc(100% - 4px)!important;
+      max-width:none!important;
+      height:80%!important;
+      max-height:80%!important;
+      padding-left:1px!important;
+      padding-right:1px!important;
+      margin:0!important;
+      box-sizing:border-box!important;
+      transform:translateX(-50%)!important;
+      text-align:start!important;
+      text-align-last:auto!important;
+      overflow:hidden!important;
+      white-space:normal!important;
+      writing-mode:vertical-rl!important;
+      text-orientation:mixed!important;
+    }
+
+    /* Give titles that wrap into multiple vertical columns enough horizontal room. */
+    .spine-title.title-medium{
+      line-height:1.08!important;
+    }
+    .spine-title.title-long{
+      line-height:1.00!important;
+    }
+    .spine-title.title-xlong{
+      line-height:.94!important;
+    }
+
+    /* Slightly broader paper bookmark. */
+    .reading-ribbon{
+      left:58%!important;
+      top:-21px!important;
+      width:26%!important;
+      min-width:7px!important;
+      max-width:11px!important;
+      height:21px!important;
+      overflow:visible!important;
+    }
+
+    /* Punched hole. */
+    .reading-ribbon::before{
+      content:""!important;
+      position:absolute!important;
+      left:50%!important;
+      top:3px!important;
+      width:2.4px!important;
+      height:2.4px!important;
+      transform:translateX(-50%)!important;
+      border-radius:50%!important;
+      background:#6f5038!important;
+      box-shadow:0 0 0 .7px rgba(255,247,218,.70)!important;
+      opacity:1!important;
+      visibility:visible!important;
+      z-index:14!important;
+    }
+
+    /* Knot: always visible, independent of hover/selection state. */
+    .reading-ribbon::after{
+      content:""!important;
+      position:absolute!important;
+      left:50%!important;
+      top:-1.5px!important;
+      width:4px!important;
+      height:3px!important;
+      transform:translateX(-50%)!important;
+      border-radius:55% 55% 48% 48%!important;
+      background:#765438!important;
+      box-shadow:0 .4px .6px rgba(55,38,24,.18)!important;
+      opacity:1!important;
+      visibility:visible!important;
+      z-index:15!important;
+    }
+
+    .spine-wrap.is-reading::before,
+    .spine-wrap.is-reading::after{
+      z-index:13!important;
+      top:-35px!important;
+      width:1.7px!important;
+      height:17px!important;
+      opacity:1!important;
+      visibility:visible!important;
+      background:#725039!important;
+    }
+
+    .spine-wrap.is-reading::before{
+      left:56.2%!important;
+      transform:translateX(-50%) rotate(-10deg)!important;
+    }
+    .spine-wrap.is-reading::after{
+      left:59.8%!important;
+      transform:translateX(-50%) rotate(10deg)!important;
+    }
+
+    @media(max-width:620px){
+      /* The previous issue was LEFT/RIGHT clipping when long vertical titles formed
+         multiple columns. Keep almost the full spine width available. */
+      .spine-title{
+        top:10.5%!important;
+        width:calc(100% - 2px)!important;
+        max-width:none!important;
+        height:84%!important;
+        max-height:84%!important;
+        padding-left:1px!important;
+        padding-right:1px!important;
+        overflow:hidden!important;
+      }
+
+      .spine-title.title-medium{
+        font-size:clamp(.385rem,1.66vw,.515rem)!important;
+        line-height:1.04!important;
+      }
+      .spine-title.title-long{
+        font-size:clamp(.335rem,1.44vw,.455rem)!important;
+        line-height:.96!important;
+      }
+      .spine-title.title-xlong{
+        font-size:clamp(.285rem,1.22vw,.39rem)!important;
+        line-height:.90!important;
+        letter-spacing:-.016em!important;
+      }
+
+      .reading-ribbon{
+        top:-18px!important;
+        width:27%!important;
+        min-width:6px!important;
+        max-width:9px!important;
+        height:18px!important;
+      }
+      .reading-ribbon::before{
+        top:2.5px!important;
+        width:2px!important;
+        height:2px!important;
+      }
+      .reading-ribbon::after{
+        top:-1.2px!important;
+        width:3.4px!important;
+        height:2.6px!important;
+      }
+      .spine-wrap.is-reading::before,
+      .spine-wrap.is-reading::after{
+        top:-30px!important;
+        width:1.4px!important;
+        height:14px!important;
+      }
+      .spine-wrap.is-reading::before{left:56%!important}
+      .spine-wrap.is-reading::after{left:60%!important}
+    }
+
   </style>
 </head>
 <body>
