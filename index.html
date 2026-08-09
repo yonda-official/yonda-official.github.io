@@ -1327,80 +1327,109 @@
     @media(max-width:620px){.public-legal-footer{margin-bottom:72px;padding:0 12px}.public-legal-links{gap:6px 12px}}
 
   
-    /* Yonda! 読書記録 */
-    .yonda-calendar-shell{display:grid;gap:8px}
-    .yonda-calendar-month{font-size:.74rem;font-weight:700;color:var(--text)}
+    /* Yonda calendar v25 */
+    .yonda-calendar-panel{padding:13px!important}
+    .yonda-calendar-shell{display:grid;gap:6px}
+    .yonda-calendar-toolbar{
+      display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:2px;
+    }
+    .yonda-calendar-toolbar button{
+      border:1px solid var(--line);background:#fff;border-radius:10px;
+      width:28px;height:28px;padding:0;display:grid;place-items:center;color:var(--text);
+    }
+    .yonda-calendar-month{
+      min-width:112px;text-align:center;font-size:.74rem;font-weight:700;color:var(--text);
+    }
     .yonda-calendar-weekdays,
     .yonda-calendar-grid{
-      display:grid;
-      grid-template-columns:repeat(7,minmax(0,1fr));
-      gap:4px;
+      display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;
     }
     .yonda-calendar-weekdays span{
-      text-align:center;
-      font-size:.56rem;
-      line-height:1;
-      color:var(--muted);
+      text-align:center;font-size:.54rem;line-height:1;color:var(--muted);
     }
     .yonda-calendar-day{
-      height:25px;
-      border-radius:7px;
-      display:grid;
-      place-items:center;
-      font-size:.61rem;
-      color:#8a8e86;
-      background:#f4f1ea;
+      height:24px;border-radius:7px;display:grid;place-items:center;
+      font-size:.60rem;color:#8a8e86;background:#f4f1ea;
       border:1px solid rgba(222,215,201,.55);
     }
-    .yonda-calendar-day.blank{
-      visibility:hidden;
-    }
+    .yonda-calendar-day.blank{visibility:hidden}
     .yonda-calendar-day.read{
-      color:#fff;
-      background:var(--accent);
-      border-color:var(--accent);
-      font-weight:700;
+      color:#fff;background:var(--accent);border-color:var(--accent);font-weight:700;
     }
     .yonda-calendar-summary{
-      margin:1px 0 0;
-      font-size:.68rem;
-      line-height:1.45;
-      color:var(--muted);
+      margin:1px 0 0;font-size:.66rem;line-height:1.35;color:var(--muted);
     }
     .yonda-action{
-      margin:0 0 12px;
-      padding:12px;
-      border:1px solid rgba(111,143,104,.24);
-      border-radius:15px;
-      background:#f3f7ef;
+      margin:0 0 10px;padding:10px 12px;border:1px solid rgba(111,143,104,.24);
+      border-radius:15px;background:#f3f7ef;
     }
     .yonda-action[hidden]{display:none!important}
     .yonda-action-copy{
-      margin:0 0 9px;
-      font-size:.76rem;
-      font-weight:700;
-      color:var(--text);
+      margin:0 0 8px;font-size:.76rem;font-weight:700;color:var(--text);
     }
-    .yonda-action .primary{width:100%;padding:11px 14px}
+    .yonda-action .primary{width:100%;padding:10px 14px}
     .yonda-action .primary.recorded{
-      background:#fff;
-      color:var(--accent);
-      border:1px solid rgba(111,143,104,.55);
-      box-shadow:none;
+      background:#fff;color:var(--accent);border:1px solid rgba(111,143,104,.55);box-shadow:none;
     }
     .yonda-action-note{
-      margin:7px 0 0;
-      text-align:center;
-      font-size:.64rem;
-      line-height:1.45;
-      color:var(--muted);
-    }
-    @media(max-width:620px){
-      .yonda-calendar-day{height:24px;font-size:.59rem}
-      .yonda-action{padding:11px}
+      margin:6px 0 0;text-align:center;font-size:.63rem;line-height:1.4;color:var(--muted);
     }
 
-  </style>
+    /* Home side stack compaction */
+    #homeSection .side-stack{gap:9px!important}
+    #homeSection .side-stack > .panel{padding:12px!important}
+    #homeSection .side-stack > .panel .panel-head{margin-bottom:7px!important}
+    #homeSection .side-stack .quick-stats{gap:6px!important}
+    #homeSection .side-stack .stat{padding:7px 6px!important;min-height:56px!important}
+    #homeSection .side-stack .stat strong{font-size:1.08rem!important}
+    #homeSection .side-stack .stat span{font-size:.60rem!important}
+    #homeSection .side-stack .prompt-box{min-height:58px!important;padding:9px!important}
+    #homeSection .favorite-quote-card{min-height:58px!important}
+    #homeSection .favorite-quote-text{font-size:.76rem;line-height:1.55}
+    #homeSection .favorite-quote-source{padding-top:6px}
+    #homeSection .big-add-button{padding:12px 14px!important;border-radius:16px!important}
+    #homeSection .big-add-icon{width:36px!important;height:36px!important;font-size:1.35rem!important}
+    #homeSection .big-add-button strong{font-size:.92rem}
+    #homeSection .big-add-button small{font-size:.66rem}
+
+    @media(max-width:620px){
+      .yonda-calendar-day{height:23px;font-size:.58rem}
+      .yonda-calendar-panel{padding:12px!important}
+    }
+
+  
+    /* Yonda calendar v26: compact home right column */
+    #homeSection .side-stack{gap:8px!important}
+    #homeSection .side-stack > .panel{padding:11px 12px!important}
+    #homeSection .side-stack > .panel .panel-head{margin-bottom:6px!important}
+    #homeSection .yonda-calendar-panel .panel-head{margin-bottom:5px!important}
+    #homeSection .yonda-calendar-shell{gap:5px}
+    #homeSection .yonda-calendar-toolbar{margin-bottom:1px;gap:6px}
+    #homeSection .yonda-calendar-toolbar button{width:27px;height:27px;border-radius:9px;font-size:.70rem}
+    #homeSection .yonda-calendar-month{min-width:108px;font-size:.72rem}
+    #homeSection .yonda-calendar-weekdays,#homeSection .yonda-calendar-grid{gap:3px}
+    #homeSection .yonda-calendar-day{height:22px;border-radius:6px;font-size:.57rem}
+    #homeSection .yonda-calendar-summary{margin-top:2px;text-align:center;font-size:.63rem}
+    #homeSection .side-stack .quick-stats{gap:5px!important}
+    #homeSection .side-stack .stat{padding:6px 5px!important;min-height:50px!important}
+    #homeSection .side-stack .stat strong{font-size:1rem!important}
+    #homeSection .side-stack .stat span{font-size:.58rem!important}
+    #homeSection .side-stack .prompt-box{min-height:52px!important;padding:8px!important}
+    #homeSection .favorite-quote-card{min-height:52px!important;gap:5px}
+    #homeSection .favorite-quote-text{font-size:.73rem;line-height:1.45;-webkit-line-clamp:3}
+    #homeSection .favorite-quote-source{padding-top:5px;font-size:.66rem}
+    #homeSection .big-add-button{padding:11px 13px!important}
+    #homeSection .big-add-icon{width:34px!important;height:34px!important;font-size:1.25rem!important}
+    #homeSection .big-add-button strong{font-size:.90rem}
+    #homeSection .big-add-button small{font-size:.64rem}
+
+    @media(max-width:620px){
+      #homeSection .side-stack{gap:10px!important}
+      #homeSection .side-stack > .panel{padding:12px!important}
+      #homeSection .yonda-calendar-day{height:27px;font-size:.62rem}
+      #homeSection .yonda-calendar-weekdays,#homeSection .yonda-calendar-grid{gap:4px}
+    }
+</style>
 </head>
 <body>
   <main class="app">
@@ -1479,6 +1508,11 @@
             <span><strong>本を追加する</strong><small>タイトルやISBNから検索</small></span>
           </button>
 
+          <div class="panel yonda-calendar-panel">
+            <div class="panel-head"><h3>Yonda!カレンダー</h3></div>
+            <div id="yondaCalendar" class="yonda-calendar-shell" aria-live="polite"></div>
+          </div>
+
           <div class="panel">
             <div class="panel-head"><h3>読書サマリー</h3><span class="tiny">現在の記録</span></div>
             <div class="quick-stats">
@@ -1486,15 +1520,6 @@
               <div class="stat"><strong id="readCount">0</strong><span>読了冊数</span></div>
               <div class="stat"><strong id="pageCount">0</strong><span class="nowrap-label">読了ページ</span></div>
             </div>
-          </div>
-
-
-          <div class="panel">
-            <div class="panel-head">
-              <h3>Yondaカレンダー</h3>
-              <span class="tiny">読んだ日だけ記録</span>
-            </div>
-            <div id="yondaCalendar" class="yonda-calendar-shell" aria-label="Yondaカレンダー"></div>
           </div>
 
           <div class="panel">
@@ -1735,7 +1760,7 @@
             Yonda?は、これまで読んだ本、心に残った文章、読書の傾向を自分の本棚として長く保存し、振り返ることを大切にしています。</p>
             <ul class="about-feature-list">
               <li><strong>本棚</strong><br>登録した本を、実際の本棚を眺めるような背表紙のデザインで一覧できます。読み終えた本も、これから読みたい本も、自分の好きな順番に並べ替えながら、少しずつ自分だけの本棚を育ててください。</li>
-              <li><strong>読書記録</strong><br>状態、評価、読了日、Yondaした日、ジャンル・タグ、一言メモ、お気に入りの文章、本との出会い方を保存できます。</li>
+              <li><strong>読書記録</strong><br>状態、評価、読了日、ジャンル・タグ、一言メモ、お気に入りの文章、本との出会い方を保存できます。</li>
               <li><strong>検索と自動入力</strong><br>タイトル・著者・表紙などを自動入力します。ページ数は取得できる場合に反映されます。</li>
               <li><strong>振り返り</strong><br>カレンダーやマイダッシュボードで、自分の読書履歴や傾向を確認できます。</li>
               <li><strong>データ保存</strong><br>無料アカウントでは端末間同期を利用でき、JSON・CSVによるバックアップにも対応しています。</li>
@@ -1767,7 +1792,7 @@
           <summary>プライバシーポリシー</summary>
           <div class="legal-content">
             <p class="legal-text"><strong>1. 基本方針</strong><br>Yonda?（以下「本サービス」）は、個人情報の保護に関する法律その他の関係法令を踏まえ、ユーザーに関する情報を適切に取り扱います。</p>
-            <p class="legal-text"><strong>2. 取得する情報</strong><br>メールアドレスその他の認証情報、読書記録（タイトル、著者、出版社、ISBN、表紙URL、状態、評価、ページ数、読了日、Yondaした日、ジャンル・タグ、メモ、お気に入りの文章、本との出会い方等）、お問い合わせ内容、アクセス日時、端末・ブラウザ情報、IPアドレス、Cookieその他の識別子、操作履歴および不具合情報を取得する場合があります。</p>
+            <p class="legal-text"><strong>2. 取得する情報</strong><br>メールアドレスその他の認証情報、読書記録（タイトル、著者、出版社、ISBN、表紙URL、状態、評価、ページ数、読了日、ジャンル・タグ、メモ、お気に入りの文章、本との出会い方等）、お問い合わせ内容、アクセス日時、端末・ブラウザ情報、IPアドレス、Cookieその他の識別子、操作履歴および不具合情報を取得する場合があります。</p>
             <p class="legal-text"><strong>3. 利用目的</strong><br>アカウント認証、サービス提供、端末間同期、データ保存・復元、お問い合わせ対応、不正利用防止、障害調査、利用状況の分析、品質改善、重要なお知らせおよび法令上必要な対応のために利用します。</p>
             <p class="legal-text"><strong>4. 外部サービス</strong><br>本サービスは、認証・データ保存にSupabase、書籍検索に楽天ウェブサービス、openBD、国立国会図書館サーチ、Open Library、Google Books、アクセス解析にGoogle Analytics、お問い合わせ受付にGoogleフォームを利用します。送信された情報はGoogle LLCのサービス上で管理されます。広告掲載開始後はGoogle AdSenseを利用する場合があります。各サービスには、利用に必要な範囲で情報が送信されることがあります。</p>
             <p class="legal-text"><strong>5. Google Analytics</strong><br>本サービスは、利用状況の把握と改善のためGoogle Analyticsを使用します。Google AnalyticsはCookie等を利用してアクセス情報を収集することがあり、収集された情報はGoogleの方針に基づいて管理されます。</p>
@@ -1987,12 +2012,6 @@
         <h3 id="modalTitle">本を追加</h3>
         <button class="ghost" id="closeModal">閉じる</button>
       </div>
-
-      <div class="yonda-action" id="yondaAction" hidden>
-        <p class="yonda-action-copy">今日はこの本を読みましたか？</p>
-        <button type="button" class="primary" id="yondaTodayBtn">Yonda!</button>
-        <p class="yonda-action-note">Yondaカレンダーに追加されます。</p>
-      </div>
       <form id="bookForm" class="form-grid">
         <div class="book-search-box">
           <label style="color:var(--text);font-weight:700">本を検索して自動入力
@@ -2003,6 +2022,11 @@
           </label>
           <div class="note" style="margin-top:8px">候補を選ぶと、タイトル・著者・表紙などを自動入力します。ページ数は取得できる場合に反映されます。</div>
           <div class="book-search-results" id="bookSearchResults"></div>
+        </div>
+        <div class="yonda-action" id="yondaAction" hidden>
+          <p class="yonda-action-copy">今日はこの本を読みましたか？</p>
+          <button type="button" class="primary" id="yondaTodayBtn" aria-pressed="false">Yonda?</button>
+          <p class="yonda-action-note">Yonda!カレンダーに追加されます。</p>
         </div>
         <input type="hidden" id="bookId" />
         <input type="hidden" id="coverUrl" />
@@ -2151,7 +2175,7 @@
     }
 
     const ERROR_LOG_KEY = "yonda_error_log_v1";
-    const APP_VERSION = "yonda-calendar-v24";
+    const APP_VERSION = "yonda-calendar-v25";
 
     function compactErrorMessage(error){
       const message=error instanceof Error ? error.message : String(error||"Unknown error");
@@ -2593,13 +2617,11 @@
       const d=new Date();
       return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
     }
-
     function normalizeYondaDates(list){
       return [...new Set((Array.isArray(list)?list:[])
         .map(x=>String(x||""))
         .filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)))].sort();
     }
-
     function getYondaDateSet(){
       const dates=new Set();
       books.forEach(book=>{
@@ -2608,14 +2630,14 @@
       });
       return dates;
     }
+    let yondaCalendarCursor=new Date();
 
     function renderYondaCalendar(){
       const target=$("#yondaCalendar");
       if(!target) return;
 
-      const now=new Date();
-      const year=now.getFullYear();
-      const month=now.getMonth();
+      const year=yondaCalendarCursor.getFullYear();
+      const month=yondaCalendarCursor.getMonth();
       const firstDay=new Date(year,month,1);
       const daysInMonth=new Date(year,month+1,0).getDate();
       const mondayStart=(firstDay.getDay()+6)%7;
@@ -2635,13 +2657,26 @@
       }
 
       target.innerHTML=`
-        <div class="yonda-calendar-month">${year}年${month+1}月</div>
+        <div class="yonda-calendar-toolbar">
+          <button type="button" id="yondaPrevMonth" aria-label="前の月へ" title="前の月">＜</button>
+          <div class="yonda-calendar-month" aria-label="${year}年${month+1}月">${year}年${month+1}月</div>
+          <button type="button" id="yondaNextMonth" aria-label="次の月へ" title="次の月">＞</button>
+        </div>
         <div class="yonda-calendar-weekdays" aria-hidden="true">
           <span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span><span>日</span>
         </div>
         <div class="yonda-calendar-grid">${cells.join("")}</div>
-        <p class="yonda-calendar-summary">今月は ${readDays}日、本を読みました。</p>
+        <p class="yonda-calendar-summary">この月は ${readDays}日、本を読みました。</p>
       `;
+
+      $("#yondaPrevMonth").onclick=()=>{
+        yondaCalendarCursor=new Date(year,month-1,1);
+        renderYondaCalendar();
+      };
+      $("#yondaNextMonth").onclick=()=>{
+        yondaCalendarCursor=new Date(year,month+1,1);
+        renderYondaCalendar();
+      };
     }
 
     function updateYondaButton(){
@@ -2654,7 +2689,7 @@
       if(!book) return;
 
       const recorded=normalizeYondaDates(book.yondaDates).includes(todayIso());
-      button.textContent=recorded?"✓ 今日Yondaしました":"Yonda!";
+      button.textContent=recorded?"Yonda!":"Yonda?";
       button.classList.toggle("recorded",recorded);
       button.setAttribute("aria-pressed",recorded?"true":"false");
     }
