@@ -1710,6 +1710,88 @@
       .genre-slot-palette{grid-template-columns:repeat(5,22px)}
     }
 
+
+
+    /* v35: spine typography + clearer reading bookmark */
+    .spine-title{
+      top:11.5%!important;
+      bottom:9%!important;
+      font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Meiryo",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+      font-weight:600!important;
+      font-size:clamp(.58rem,1.42vw,.80rem)!important;
+      line-height:1.08!important;
+      letter-spacing:.015em!important;
+      color:#302d29!important;
+      text-shadow:none!important;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    .spine-title.title-medium{font-size:clamp(.53rem,1.25vw,.72rem)!important;letter-spacing:.008em!important}
+    .spine-title.title-long{font-size:clamp(.48rem,1.09vw,.65rem)!important;letter-spacing:0!important;line-height:1.05!important}
+    .spine-title.title-xlong{font-size:clamp(.43rem,.98vw,.59rem)!important;letter-spacing:-.006em!important;line-height:1.02!important}
+
+    .reorder-spine-title{
+      font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Meiryo",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+      font-weight:600!important;
+      color:#302d29!important;
+      letter-spacing:.01em!important;
+    }
+
+    /* Use a simple cloth ribbon silhouette instead of the small image tip. */
+    .reading-ribbon{display:none!important}
+    .spine-wrap.is-reading::before{
+      content:"";
+      position:absolute;
+      z-index:7;
+      left:64%;
+      top:-13px;
+      width:25%;
+      min-width:8px;
+      max-width:14px;
+      height:24px;
+      transform:translateX(-50%);
+      background:linear-gradient(90deg,#d9b96f 0%,#f0d28d 46%,#d5ae5d 100%);
+      border:1px solid rgba(126,91,35,.28);
+      border-bottom:0;
+      clip-path:polygon(0 0,100% 0,100% 100%,50% 72%,0 100%);
+      box-shadow:0 1px 1px rgba(70,50,24,.10);
+      pointer-events:none;
+    }
+    .spine-wrap.is-reading::after{
+      content:"";
+      position:absolute;
+      z-index:8;
+      left:64%;
+      top:-11px;
+      width:1px;
+      height:14px;
+      transform:translateX(-50%);
+      background:rgba(255,248,221,.48);
+      pointer-events:none;
+    }
+
+    @media(max-width:620px){
+      .spine-title{
+        top:10.5%!important;
+        bottom:8%!important;
+        font-weight:700!important;
+        font-size:clamp(.49rem,2.22vw,.64rem)!important;
+        line-height:1.06!important;
+        letter-spacing:.006em!important;
+      }
+      .spine-title.title-medium{font-size:clamp(.45rem,2.02vw,.59rem)!important}
+      .spine-title.title-long{font-size:clamp(.41rem,1.84vw,.54rem)!important;line-height:1.03!important}
+      .spine-title.title-xlong{font-size:clamp(.38rem,1.69vw,.50rem)!important;line-height:1.01!important}
+      .spine-wrap.is-reading::before{
+        left:64%;
+        top:-10px;
+        width:27%;
+        min-width:7px;
+        max-width:11px;
+        height:19px;
+      }
+      .spine-wrap.is-reading::after{top:-8px;height:11px}
+    }
 </style>
 </head>
 <body>
