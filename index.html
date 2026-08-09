@@ -1323,7 +1323,10 @@
     .public-legal-link{border:0;background:transparent;color:var(--muted);padding:3px 0;text-decoration:underline;text-underline-offset:3px}
     .policy-meta{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);color:var(--muted);font-size:.68rem;line-height:1.65}
     .about-feature-list{display:grid;gap:8px;margin:12px 0 0;padding:0;list-style:none}
-    .about-feature-list li{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.72);font-size:.75rem;line-height:1.55}
+    .about-feature-list > li{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.72);font-size:.75rem;line-height:1.55}
+    .yonda-about-label{margin:7px 0 0;font-size:.72rem;font-weight:700;color:var(--text)}
+    .yonda-about-days{margin:3px 0 0;padding-left:1.2rem;color:var(--muted)}
+    .yonda-about-days li{margin:1px 0;padding:0;border:0;background:none;border-radius:0;font-size:.72rem;line-height:1.4}
     @media(max-width:620px){.public-legal-footer{margin-bottom:72px;padding:0 12px}.public-legal-links{gap:6px 12px}}
 
   
@@ -1359,6 +1362,24 @@
     .yonda-calendar-summary{
       margin:1px 0 0;font-size:.66rem;line-height:1.35;color:var(--muted);
     }
+    .yonda-calendar-head{position:relative}
+    .yonda-info-button{
+      width:24px;height:24px;padding:0;border:1px solid var(--line);border-radius:50%;
+      background:#fff;color:var(--accent);display:grid;place-items:center;
+      font-size:.72rem;font-weight:800;line-height:1;box-shadow:0 2px 7px rgba(54,62,49,.06);
+    }
+    .yonda-info-button:hover{background:#f3f7ef;border-color:rgba(111,143,104,.42)}
+    .yonda-info-popover{
+      position:absolute;top:31px;right:0;z-index:12;width:min(320px,calc(100vw - 52px));
+      padding:13px 14px;border:1px solid rgba(111,143,104,.24);border-radius:14px;
+      background:rgba(255,253,248,.98);box-shadow:0 12px 28px rgba(54,62,49,.14);
+      color:var(--text);
+    }
+    .yonda-info-popover[hidden]{display:none!important}
+    .yonda-info-popover p{margin:0;font-size:.72rem;line-height:1.4;color:var(--text)}
+    .yonda-info-label{margin:8px 0 0;padding-top:7px;border-top:1px solid var(--line);font-size:.68rem;font-weight:700;color:var(--text)}
+    .yonda-info-popover ul{margin:5px 0 0;padding:0 0 0 1.25rem}
+    .yonda-info-popover li{margin:2px 0;font-size:.70rem;line-height:1.4;color:var(--muted)}
     .yonda-action{
       margin:0 0 10px;padding:10px 12px;border:1px solid rgba(111,143,104,.24);
       border-radius:15px;background:#f3f7ef;
@@ -1509,7 +1530,18 @@
           </button>
 
           <div class="panel yonda-calendar-panel">
-            <div class="panel-head"><h3>Yonda!カレンダー</h3></div>
+            <div class="panel-head yonda-calendar-head">
+              <h3>Yonda!カレンダー</h3>
+              <button class="yonda-info-button" id="yondaInfoBtn" type="button" aria-label="Yonda!カレンダーの説明" aria-expanded="false" aria-controls="yondaInfoPopover">!</button>
+              <div class="yonda-info-popover" id="yondaInfoPopover" role="note" hidden>
+                <p>読了日と「Yonda?」を押した日が記録されます。<br>自分だけの読書の軌跡を記録してください。</p>
+                <div class="yonda-info-label">登録される日</div>
+                <ul>
+                  <li>読了日</li>
+                  <li>本棚で本を開いて「Yonda?」をタップした日</li>
+                </ul>
+              </div>
+            </div>
             <div id="yondaCalendar" class="yonda-calendar-shell" aria-live="polite"></div>
           </div>
 
@@ -1761,6 +1793,13 @@
             <ul class="about-feature-list">
               <li><strong>本棚</strong><br>登録した本を、実際の本棚を眺めるような背表紙のデザインで一覧できます。読み終えた本も、これから読みたい本も、自分の好きな順番に並べ替えながら、少しずつ自分だけの本棚を育ててください。</li>
               <li><strong>読書記録</strong><br>状態、評価、読了日、ジャンル・タグ、一言メモ、お気に入りの文章、本との出会い方を保存できます。</li>
+              <li><strong>Yonda!カレンダー</strong><br>読了日と「Yonda?」を押した日が記録されます。<br>自分だけの読書の軌跡を記録してください。
+                <div class="yonda-about-label">登録される日</div>
+                <ul class="yonda-about-days">
+                  <li>読了日</li>
+                  <li>本棚で本を開いて「Yonda?」をタップした日</li>
+                </ul>
+              </li>
               <li><strong>検索と自動入力</strong><br>タイトル・著者・表紙などを自動入力します。ページ数は取得できる場合に反映されます。</li>
               <li><strong>振り返り</strong><br>カレンダーやマイダッシュボードで、自分の読書履歴や傾向を確認できます。</li>
               <li><strong>データ保存</strong><br>無料アカウントでは端末間同期を利用でき、JSON・CSVによるバックアップにも対応しています。</li>
@@ -2175,7 +2214,7 @@
     }
 
     const ERROR_LOG_KEY = "yonda_error_log_v1";
-    const APP_VERSION = "yonda-calendar-v25";
+    const APP_VERSION = "yonda-calendar-v28";
 
     function compactErrorMessage(error){
       const message=error instanceof Error ? error.message : String(error||"Unknown error");
@@ -4104,6 +4143,22 @@
     updatePageFieldNote();
     initAuth();
   
+
+    // Yonda!カレンダーの説明ポップオーバー
+    const yondaInfoBtn=document.getElementById("yondaInfoBtn");
+    const yondaInfoPopover=document.getElementById("yondaInfoPopover");
+    function setYondaInfoOpen(open){
+      if(!yondaInfoBtn||!yondaInfoPopover) return;
+      yondaInfoPopover.hidden=!open;
+      yondaInfoBtn.setAttribute("aria-expanded",open?"true":"false");
+    }
+    yondaInfoBtn?.addEventListener("click",event=>{
+      event.stopPropagation();
+      setYondaInfoOpen(yondaInfoPopover?.hidden ?? true);
+    });
+    yondaInfoPopover?.addEventListener("click",event=>event.stopPropagation());
+    document.addEventListener("click",()=>setYondaInfoOpen(false));
+    document.addEventListener("keydown",event=>{if(event.key==="Escape") setYondaInfoOpen(false)});
 
     const GOOGLE_FORM_URL = "https://forms.gle/31abNwvx12yuavFu6";
     document.getElementById("openGoogleFormBtn")?.addEventListener("click", () => {
