@@ -2383,7 +2383,63 @@
       }
     }
 
-  </style>
+  
+    /* v62: スマホ画面切替時の横幅・余白・表示倍率を全ページで固定 */
+    @media(max-width:620px){
+      html,body{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden;
+        -webkit-text-size-adjust:100%;
+        text-size-adjust:100%;
+      }
+      .app{
+        width:100%;
+        max-width:100%;
+        margin-left:auto;
+        margin-right:auto;
+      }
+      #homeSection,
+      #statsSection,
+      #aiSection{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+      }
+      #homeSection > *,
+      #statsSection > *,
+      #aiSection > *,
+      #statsSection .layout,
+      #statsSection .layout > *,
+      #statsSection .panel,
+      #statsSection .panel-head,
+      #statsSection .dashboard-controls,
+      #statsSection #dashboardChart,
+      #statsSection #dashboardSummary{
+        min-width:0;
+        max-width:100%;
+      }
+      #statsSection #dashboardChart{
+        width:100%;
+        overflow:hidden;
+      }
+      #statsSection .dashboard-bars,
+      #statsSection .donut-wrap,
+      #statsSection .legend{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+      }
+      #statsSection .dashboard-bar-item,
+      #statsSection .legend-item,
+      #statsSection .legend-item span{
+        min-width:0;
+      }
+      #statsSection .legend-item span{
+        overflow-wrap:anywhere;
+      }
+    }
+</style>
 </head>
 <body>
   <main class="app">
