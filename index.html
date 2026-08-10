@@ -2333,6 +2333,45 @@
       }
     }
 
+  
+    /* v60: bookshelf controls below shelf + compact Yonda! totals */
+    .bookshelf-controls{
+      margin-top:12px;
+    }
+    .bookshelf-controls .filters{
+      margin:10px 0 0;
+    }
+    .yonda-calendar-summary{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      gap:14px!important;
+      flex-wrap:wrap!important;
+    }
+    .yonda-calendar-summary span{
+      white-space:nowrap;
+    }
+
+    @media(max-width:620px){
+      .bookshelf-controls{
+        margin-top:10px;
+      }
+      .bookshelf-controls .filters{
+        gap:6px;
+        overflow:visible;
+        flex-wrap:nowrap;
+      }
+      .bookshelf-controls .chip{
+        padding-left:9px;
+        padding-right:9px;
+        font-size:.72rem;
+      }
+      .yonda-calendar-summary{
+        gap:8px!important;
+        font-size:.68rem!important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -2382,17 +2421,19 @@
             </div>
             <button class="secondary" type="button" id="openReorderModalHome">本の並び替え</button>
           </div>
-          <div class="search-row">
-            <input id="searchInput" class="field" placeholder="タイトル・著者・タグで検索" />
-            <button class="secondary" id="clearSearch">クリア</button>
-          </div>
-          <div class="filters" id="filters">
-            <button class="chip active" data-filter="all">すべて</button>
-            <button class="chip" data-filter="want">読みたい</button>
-            <button class="chip" data-filter="reading">読書中</button>
-            <button class="chip" data-filter="done">読了</button>
-          </div>
           <div class="bookshelf bookshelf-preview" id="bookList"></div>
+          <div class="bookshelf-controls">
+            <div class="search-row">
+              <input id="searchInput" class="field" placeholder="タイトル・著者・タグで検索" />
+              <button class="secondary" id="clearSearch">クリア</button>
+            </div>
+            <div class="filters" id="filters">
+              <button class="chip active" data-filter="all">すべて</button>
+              <button class="chip" data-filter="want">Yomitai!</button>
+              <button class="chip" data-filter="reading">Yonderu!</button>
+              <button class="chip" data-filter="done">Yonda!</button>
+            </div>
+          </div>
           <div class="shelf-footer">
             <p class="tiny">ホームには最初の10冊を表示します。11冊目以降は「すべてを表示」から確認できます。</p>
             <button class="secondary" id="showAllBooksBtn">すべてを表示</button>
@@ -2444,13 +2485,12 @@
                 <option value="monthlyBooks">月別の読了冊数</option>
                 <option value="monthlyPages">月別の読了ページ</option>
                 <option value="genres">ジャンル構成</option>
-                <option value="status">読書ステータス</option>
+                <option value="status">Yomitai! / Yonderu! / Yonda!</option>
                 <option value="ratings">評価の分布</option>
                 <option value="discovery">本との出会い方</option>
               </select>
             </div>
           </div>
-          <p class="note">見たい切り口を選ぶと、同じ場所のグラフが切り替わります。</p>
           <div id="dashboardChart"></div>
         </div>
         <aside class="side-stack">
@@ -2632,9 +2672,9 @@
             <p class="legal-text"><strong>自分のペースで、読んだ本を残すための個人向け読書記録サービスです。</strong><br>
             Yonda?は、これまで読んだ本、心に残った文章、読書の傾向を自分の本棚として長く保存し、振り返ることを大切にしています。</p>
             <ul class="about-feature-list">
-              <li><strong>本棚</strong><br>登録した本を、実際の本棚を眺めるような背表紙のデザインで一覧できます。読み終えた本も、これから読みたい本も、自分の好きな順番に並べ替えながら、少しずつ自分だけの本棚を育ててください。</li>
-              <li><strong>読書記録</strong><br>状態、評価、読了日、ジャンル・タグ、一言メモ、お気に入りの文章、本との出会い方を保存できます。</li>
-              <li><strong>Yonda!カレンダー</strong><br>読了日と「Yonda?」を押した日が記録されます。<br>自分だけの読書の軌跡を記録してください。
+              <li><strong>本棚</strong><br>登録した本を、実際の本棚を眺めるような背表紙のデザインで一覧できます。Yonda!した本も、これからYomitai!本も、自分の好きな順番に並べ替えながら、少しずつ自分だけの本棚を育ててください。</li>
+              <li><strong>読書記録</strong><br>Yomitai!（読みたい）、Yonderu!（読書中）、Yonda!（読了）の状態に加え、評価、読了日、ジャンル・タグ、一言メモ、お気に入りの文章、本との出会い方を保存できます。</li>
+              <li><strong>Yonda!カレンダー</strong><br>読了日と「Yonda?」を押した日が記録されます。<br>今月のYonda!と今年のYonda!を確認しながら、自分だけの読書の軌跡を記録できます。
                 <div class="yonda-about-label">登録される日</div>
                 <ul class="yonda-about-days">
                   <li>読了日</li>
@@ -2930,9 +2970,9 @@
         <div class="two page-date-grid">
           <label>状態
             <select id="status">
-              <option value="want">読みたい</option>
-              <option value="reading">読書中</option>
-              <option value="done">読了</option>
+              <option value="want">Yomitai!（読みたい）</option>
+              <option value="reading">Yonderu!（読書中）</option>
+              <option value="done">Yonda!（読了）</option>
             </select>
           </label>
           <label>評価
@@ -3392,7 +3432,7 @@
       }
     }
 
-    function statusLabel(s){ return ({want:"読みたい",reading:"読書中",done:"読了"})[s] || s; }
+    function statusLabel(s){ return ({want:"Yomitai!",reading:"Yonderu!",done:"Yonda!"})[s] || s; }
     function stars(n){ return n ? "★".repeat(n) : "未評価"; }
     function gradient(seed){
       const sets = [
@@ -3756,6 +3796,22 @@
       const mondayStart=(firstDay.getDay()+6)%7;
       const yondaDates=getYondaDateSet();
 
+      const now=new Date();
+      const currentYear=now.getFullYear();
+      const currentMonth=now.getMonth()+1;
+      let currentMonthYondaDays=0;
+      let currentYearYondaDays=0;
+      yondaDates.forEach(date=>{
+        const match=/^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+        if(!match) return;
+        const dateYear=Number(match[1]);
+        const dateMonth=Number(match[2]);
+        if(dateYear===currentYear){
+          currentYearYondaDays++;
+          if(dateMonth===currentMonth) currentMonthYondaDays++;
+        }
+      });
+
       const cells=[];
       for(let i=0;i<mondayStart;i++){
         cells.push('<span class="yonda-calendar-day blank" aria-hidden="true"></span>');
@@ -3779,7 +3835,10 @@
           <span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span><span>日</span>
         </div>
         <div class="yonda-calendar-grid">${cells.join("")}</div>
-        <p class="yonda-calendar-summary">この月は ${readDays}日、本を読みました。</p>
+        <p class="yonda-calendar-summary">
+          <span>今月のYonda! ${currentMonthYondaDays}日</span>
+          <span>今年のYonda! ${currentYearYondaDays}日</span>
+        </p>
       `;
 
       $("#yondaPrevMonth").onclick=()=>{
@@ -3933,9 +3992,9 @@
 
       if(type==="status"){
         const items=[
-          {label:"読みたい",value:books.filter(b=>b.status==="want").length},
-          {label:"読書中",value:books.filter(b=>b.status==="reading").length},
-          {label:"読了",value:books.filter(b=>b.status==="done").length}
+          {label:"Yomitai!",value:books.filter(b=>b.status==="want").length},
+          {label:"Yonderu!",value:books.filter(b=>b.status==="reading").length},
+          {label:"Yonda!",value:books.filter(b=>b.status==="done").length}
         ].filter(x=>x.value);
         target.innerHTML=renderDonut(items);
       }
@@ -3983,9 +4042,9 @@
         `${selectedYear}年の読了ページ：${yearPages.toLocaleString()}ページ\n`+
         `年間平均評価：${rated.length?avg.toFixed(1):"未評価"} / 5\n\n`+
         `全登録：${books.length}冊\n`+
-        `全期間の読了：${done.length}冊\n`+
-        `読書中：${books.filter(b=>b.status==="reading").length}冊\n`+
-        `読みたい：${books.filter(b=>b.status==="want").length}冊`;
+        `全期間のYonda!：${done.length}冊\n`+
+        `Yonderu!：${books.filter(b=>b.status==="reading").length}冊\n`+
+        `Yomitai!：${books.filter(b=>b.status==="want").length}冊`;
     }
 
     const recommendationPool = {
