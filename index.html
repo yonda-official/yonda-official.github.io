@@ -2372,6 +2372,71 @@
       }
     }
 
+  
+    /* v61: clearer bottom-nav icons */
+    .bottom-nav .nav-icon{
+      position:relative;
+      display:block;
+      width:22px;
+      height:18px;
+      font-size:0!important;
+    }
+
+    /* Home: three book spines sitting on a shelf */
+    .bottom-nav .nav-icon-shelf::before{
+      content:"";
+      position:absolute;
+      left:2px;
+      bottom:4px;
+      width:4px;
+      height:11px;
+      border:1.5px solid currentColor;
+      border-radius:1px;
+      box-shadow:
+        6px -2px 0 -1.5px transparent,
+        6px -2px 0 0 currentColor;
+      opacity:.88;
+    }
+    .bottom-nav .nav-icon-shelf::after{
+      content:"";
+      position:absolute;
+      left:1px;
+      right:1px;
+      bottom:1px;
+      height:1.5px;
+      border-radius:2px;
+      background:currentColor;
+      box-shadow:
+        12px -12px 0 -4px currentColor;
+      opacity:.88;
+    }
+
+    /* Dashboard: simple rising line chart */
+    .bottom-nav .nav-icon-chart::before{
+      content:"";
+      position:absolute;
+      left:2px;
+      bottom:2px;
+      width:18px;
+      height:13px;
+      border-left:1.5px solid currentColor;
+      border-bottom:1.5px solid currentColor;
+      opacity:.72;
+    }
+    .bottom-nav .nav-icon-chart::after{
+      content:"";
+      position:absolute;
+      left:5px;
+      top:8px;
+      width:13px;
+      height:7px;
+      border-top:2px solid currentColor;
+      transform:skewY(-28deg) rotate(-18deg);
+      transform-origin:left center;
+      border-radius:2px;
+      opacity:.95;
+    }
+
   </style>
 </head>
 <body>
@@ -2456,14 +2521,6 @@
             </div>
             <div id="yondaCalendar" class="yonda-calendar-shell" aria-live="polite"></div>
           </div>
-
-          <div class="panel">
-            <div class="panel-head"><h3>読書サマリー</h3><span class="tiny">現在の記録</span></div>
-            <div class="quick-stats">
-              <div class="stat"><strong id="totalCount">0</strong><span>登録冊数</span></div>
-              <div class="stat"><strong id="readCount">0</strong><span>読了冊数</span></div>
-              <div class="stat"><strong id="pageCount">0</strong><span class="nowrap-label">読了ページ</span></div>
-            </div>
           </div>
 
           <div class="panel">
@@ -2482,8 +2539,8 @@
             <div class="dashboard-controls">
               <select id="dashboardYearSelect" aria-label="表示する年"></select>
               <select id="chartTypeSelect" style="min-width:155px">
-                <option value="monthlyBooks">月別の読了冊数</option>
-                <option value="monthlyPages">月別の読了ページ</option>
+                <option value="monthlyBooks">月別のYonda!冊数</option>
+                <option value="monthlyPages">月別のYonda!ページ</option>
                 <option value="genres">ジャンル構成</option>
                 <option value="status">Yomitai! / Yonderu! / Yonda!</option>
                 <option value="ratings">評価の分布</option>
@@ -2526,8 +2583,8 @@
 
   <nav class="bottom-nav">
     <button class="nav-add-button" id="navAddBtn" type="button" aria-label="本を追加"><b>＋</b><span>本を追加</span></button>
-    <button class="active" data-section="homeSection"><b>⌂</b>ホーム</button>
-    <button data-section="statsSection"><b>▥</b>マイダッシュボード</button>
+    <button class="active" data-section="homeSection"><b class="nav-icon nav-icon-shelf" aria-hidden="true"></b>ホーム</button>
+    <button data-section="statsSection"><b class="nav-icon nav-icon-chart" aria-hidden="true"></b>マイダッシュボード</button>
     <button data-section="aiSection"><b>✦</b>AI分析</button>
   </nav>
 
@@ -2549,7 +2606,7 @@
           <tbody>
             <tr><td>本の登録・検索</td><td>○</td><td>○</td></tr>
             <tr><td>本棚表示</td><td>○</td><td>○</td></tr>
-            <tr><td>読書ステータス管理</td><td>○</td><td>○</td></tr>
+            <tr><td>Yomitai! / Yonderu! / Yonda! 管理</td><td>○</td><td>○</td></tr>
             <tr><td>評価・メモ・引用</td><td>○</td><td>○</td></tr>
             <tr><td>マイダッシュボード</td><td>○</td><td>○</td></tr>
             <tr><td>CSV・JSON出力</td><td>○</td><td>○</td></tr>
@@ -4038,8 +4095,8 @@
       const avg=rated.reduce((s,b)=>s+Number(b.rating),0)/(rated.length||1);
 
       $("#dashboardSummary").textContent =
-        `${selectedYear}年の読了：${yearDone.length}冊\n`+
-        `${selectedYear}年の読了ページ：${yearPages.toLocaleString()}ページ\n`+
+        `${selectedYear}年のYonda!：${yearDone.length}冊\n`+
+        `${selectedYear}年のYonda!ページ：${yearPages.toLocaleString()}ページ\n`+
         `年間平均評価：${rated.length?avg.toFixed(1):"未評価"} / 5\n\n`+
         `全登録：${books.length}冊\n`+
         `全期間のYonda!：${done.length}冊\n`+
