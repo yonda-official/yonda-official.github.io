@@ -1976,6 +1976,77 @@
       }
     }
 
+  
+    /* v47: persistent add action integrated with bottom navigation */
+    .nav-add-button{
+      border:0;
+      background:var(--accent)!important;
+      color:#fff!important;
+      border-radius:50%!important;
+      display:grid!important;
+      place-items:center!important;
+      padding:0!important;
+      box-shadow:0 8px 18px rgba(111,143,104,.22);
+      z-index:2;
+    }
+    .nav-add-button b{
+      font-size:1.55rem!important;
+      line-height:1!important;
+      font-weight:500!important;
+    }
+    .nav-add-button span{display:none}
+
+    @media(min-width:621px){
+      .bottom-nav{
+        grid-template-columns:repeat(3,1fr)!important;
+        gap:0!important;
+        align-items:center!important;
+        overflow:visible!important;
+      }
+
+      /* Desktop: + is visually independent from the navigation bar. */
+      .nav-add-button{
+        position:absolute!important;
+        left:calc(100% + 12px)!important;
+        top:50%!important;
+        transform:translateY(-50%)!important;
+        width:44px!important;
+        height:44px!important;
+        grid-column:auto!important;
+        grid-row:auto!important;
+        justify-self:auto!important;
+      }
+
+      .bottom-nav > button[data-section="homeSection"]{grid-column:1!important;grid-row:1!important}
+      .bottom-nav > button[data-section="statsSection"]{grid-column:2!important;grid-row:1!important}
+      .bottom-nav > button[data-section="aiSection"]{grid-column:3!important;grid-row:1!important}
+      .header-add-button{display:grid!important}
+    }
+
+    @media(max-width:620px){
+      .header-add-button{display:none!important}
+
+      .bottom-nav{
+        grid-template-columns:repeat(3,1fr)!important;
+        overflow:visible!important;
+      }
+
+      /* Mobile: move the floating + away from the center to the right side. */
+      .nav-add-button{
+        position:absolute!important;
+        left:auto!important;
+        right:12px!important;
+        top:-54px!important;
+        transform:none!important;
+        width:48px!important;
+        height:48px!important;
+      }
+
+      .bottom-nav > button[data-section="homeSection"]{grid-column:1!important}
+      .bottom-nav > button[data-section="statsSection"]{grid-column:2!important}
+      .bottom-nav > button[data-section="aiSection"]{grid-column:3!important}
+    }
+
   </style>
 </head>
 <body>
@@ -2050,12 +2121,7 @@
         </div>
 
         <aside class="side-stack">
-          <button class="big-add-button" id="addBtn">
-            <span class="big-add-icon">＋</span>
-            <span><strong>本を追加する</strong><small>タイトルやISBNから検索</small></span>
-          </button>
-
-          <div class="panel yonda-calendar-panel">
+<div class="panel yonda-calendar-panel">
             <div class="panel-head yonda-calendar-head">
               <h3>Yonda!カレンダー</h3>
               <button class="yonda-info-button" id="yondaInfoBtn" type="button" aria-label="Yonda!カレンダーの説明" aria-expanded="false" aria-controls="yondaInfoPopover">!</button>
@@ -2167,6 +2233,7 @@
   </footer>
 
   <nav class="bottom-nav">
+    <button class="nav-add-button" id="navAddBtn" type="button" aria-label="本を追加"><b>＋</b><span>本を追加</span></button>
     <button class="active" data-section="homeSection"><b>⌂</b>ホーム</button>
     <button data-section="statsSection"><b>▥</b>マイダッシュボード</button>
     <button data-section="aiSection"><b>✦</b>AI分析</button>
@@ -4257,7 +4324,8 @@
       }
     });
 
-    $("#addBtn").onclick=()=>openModal();
+    if($("#addBtn")) $("#addBtn").onclick=()=>openModal();
+    if($("#navAddBtn")) $("#navAddBtn").onclick=()=>openModal();
     $("#closeModal").onclick=closeModal;
     $("#bookModal").addEventListener("click",e=>{if(e.target.id==="bookModal")closeModal()});
     $("#searchInput").addEventListener("input",renderBooks);
