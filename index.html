@@ -842,12 +842,6 @@
     }
     .ad-copy strong{display:block;font-size:.78rem;margin-bottom:3px}
     .ad-copy span{display:block;color:var(--muted);font-size:.68rem;line-height:1.45}
-    .ad-close{
-      position:absolute;right:10px;top:50%;transform:translateY(-50%);
-      width:28px;height:28px;padding:0;border:1px solid var(--line);
-      background:#fff;border-radius:50%;color:var(--muted);
-      display:grid;place-items:center;font-size:.9rem;
-    }
     .danger-zone{
       border:1px solid rgba(166,91,80,.35);
       background:#fff9f7;
@@ -2319,6 +2313,26 @@
       }
     }
 
+  
+    /* v59: simplify top area */
+    .brand p{
+      display:flex;
+      align-items:center;
+      gap:2px;
+      flex-wrap:nowrap;
+      white-space:nowrap;
+    }
+    .brand-subcopy{
+      color:var(--muted);
+      font-weight:400;
+    }
+    @media(max-width:620px){
+      .brand p{
+        font-size:.66rem;
+        letter-spacing:-.01em;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -2333,7 +2347,7 @@
             <h1>Yonda?</h1>
             <span id="headerPlanBadge" class="plan-chip lite">Lite</span>
           </div>
-          <p>あなただけの本棚</p>
+          <p>あなただけの本棚 <span class="brand-subcopy">｜ 無料で使える読書管理アプリ</span></p>
         </div>
       </div>
       <div class="topbar-actions">
@@ -2341,13 +2355,6 @@
         <button class="ghost settings-button" id="settingsBtn" type="button" aria-label="設定" title="設定">⚙</button>
       </div>
     </header>
-
-    <section class="hero">
-      <div>
-        <h2>さて、今日は何を読みましょうか。</h2>
-        <p>無料で使える読書管理Webアプリです。</p>
-      </div>
-    </section>
 
     <section id="homeSection" class="section active">
 
@@ -2424,8 +2431,6 @@
           </div>
         </aside>
       </div>
-<button class="ad-close" type="button" aria-label="広告を閉じる">×</button>
-      </div>
     </section>
 
     <section id="statsSection" class="section">
@@ -2455,8 +2460,6 @@
           </div>
         </aside>
       </div>
-<button class="ad-close" type="button" aria-label="広告を閉じる">×</button>
-      </div>
     </section>
 
     <section id="aiSection" class="section">
@@ -2466,8 +2469,6 @@
           <h4>AIを使った読書分析機能を準備しています。</h4>
           <p>あなたの本棚に表れる好みをやさしく読み解き、今の関心に自然につながる次の一冊をご案内する機能を開発中です。</p>
         </div>
-      </div>
-<button class="ad-close" type="button" aria-label="広告を閉じる">×</button>
       </div>
     </section>
   </main>
@@ -5275,12 +5276,6 @@
       alert(currentUser?"この端末とクラウド上の登録データを削除しました。認証アカウント自体の削除を希望する場合は、Googleフォームから申請してください。":"この端末の登録データを削除しました。削除したデータは復元できません。");
       location.reload();
     };
-
-    document.querySelectorAll(".ad-close").forEach(button=>{
-      button.addEventListener("click",()=>{
-        button.closest(".ad-slot").hidden=true;
-      });
-    });
 
     function escapeHtml(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
     renderAll();
