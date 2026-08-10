@@ -2047,6 +2047,115 @@
       .bottom-nav > button[data-section="aiSection"]{grid-column:3!important}
     }
 
+  
+    /* v49: align standalone + button height with bottom navigation */
+    @media(min-width:621px){
+      .bottom-nav{
+        width:min(94%,560px)!important;
+        padding:8px!important;
+        min-height:60px!important;
+      }
+
+      .nav-add-button{
+        left:calc(100% + 12px)!important;
+        top:0!important;
+        transform:none!important;
+        width:60px!important;
+        height:60px!important;
+        border-radius:18px!important;
+      }
+
+      .nav-add-button b{
+        font-size:1.75rem!important;
+      }
+    }
+
+    @media(max-width:620px){
+      .bottom-nav{
+        left:12px!important;
+        right:auto!important;
+        transform:none!important;
+        width:calc(100% - 84px)!important;
+        max-width:none!important;
+        min-height:54px!important;
+        padding:6px!important;
+        border-radius:18px!important;
+      }
+
+      .bottom-nav > button[data-section]{
+        padding:7px 3px!important;
+      }
+
+      .nav-add-button{
+        position:absolute!important;
+        left:calc(100% + 10px)!important;
+        right:auto!important;
+        top:0!important;
+        transform:none!important;
+        width:54px!important;
+        height:54px!important;
+        border-radius:18px!important;
+      }
+
+      .nav-add-button b{
+        font-size:1.65rem!important;
+      }
+    }
+
+  
+    /* v50: restore mobile header + and align standalone circular + with nav height */
+
+    /* Header + remains available on both desktop and mobile. */
+    .header-add-button{
+      display:grid!important;
+    }
+
+    .nav-add-button{
+      border-radius:50%!important;
+      aspect-ratio:1/1!important;
+      padding:0!important;
+    }
+
+    @media(min-width:621px){
+      .bottom-nav{
+        min-height:60px!important;
+        height:60px!important;
+        padding:8px!important;
+      }
+
+      .nav-add-button{
+        top:0!important;
+        bottom:auto!important;
+        width:60px!important;
+        height:60px!important;
+        min-width:60px!important;
+        min-height:60px!important;
+        border-radius:50%!important;
+      }
+    }
+
+    @media(max-width:620px){
+      .header-add-button{
+        display:grid!important;
+      }
+
+      .bottom-nav{
+        min-height:54px!important;
+        height:54px!important;
+        padding:6px!important;
+      }
+
+      .nav-add-button{
+        top:0!important;
+        bottom:auto!important;
+        width:54px!important;
+        height:54px!important;
+        min-width:54px!important;
+        min-height:54px!important;
+        border-radius:50%!important;
+      }
+    }
+
   </style>
 </head>
 <body>
