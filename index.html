@@ -2963,8 +2963,59 @@
     const $ = s => document.querySelector(s);
     const $$ = s => [...document.querySelectorAll(s)];
 
-    // Google Analytics: 処理成功後のみイベントを送信する
+    // Google Analytics: 重要操作はSupabase Edge Function経由で送信し、
+    // page_view等の通常計測は従来どおりgtagに任せる。
+    const YONDA_SERVER_ANALYTICS_EVENTS = new Set([
+      "book_added",
+      "book_deleted",
+      "book_updated",
+      "book_finished",
+      "yonda_day_added",
+      "yonda_day_removed",
+      "bookshelf_reordered"
+    ]);
+    const YONDA_ANALYTICS_CLIENT_ID_KEY = "yonda_analytics_client_id_v1";
+
+    function getYondaAnalyticsClientId(){
+      let clientId=localStorage.getItem(YONDA_ANALYTICS_CLIENT_ID_KEY);
+      if(!clientId){
+        clientId=(crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+        localStorage.setItem(YONDA_ANALYTICS_CLIENT_ID_KEY,clientId);
+      }
+      return clientId;
+    }
+
+    function sendYondaServerAnalytics(name, params = {}){
+      const endpoint=`${SUPABASE_URL}/functions/v1/track-analytics`;
+      const payload={
+        event_name:name,
+        client_id:getYondaAnalyticsClientId(),
+        params:{app_version:APP_VERSION,...params}
+      };
+      fetch(endpoint,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "apikey":SUPABASE_PUBLISHABLE_KEY
+        },
+        body:JSON.stringify(payload),
+        keepalive:true
+      }).then(async response=>{
+        if(!response.ok) throw new Error(`track-analytics HTTP ${response.status}`);
+        localStorage.setItem("yonda_last_ga_event_v1",JSON.stringify({
+          name,params:payload.params,sentAt:new Date().toISOString(),via:"supabase"
+        }));
+        console.info("Yonda Analytics event sent via Supabase:",name,payload.params);
+      }).catch(error=>{
+        console.warn("Yonda Analytics server event error:",error);
+      });
+      return true;
+    }
+
     function trackYondaEvent(name, params = {}){
+      if(YONDA_SERVER_ANALYTICS_EVENTS.has(name)){
+        return sendYondaServerAnalytics(name,params);
+      }
       if(typeof window.gtag !== "function"){
         console.warn("Yonda Analytics is not ready:", name);
         return false;
@@ -2980,7 +3031,8 @@
         localStorage.setItem("yonda_last_ga_event_v1", JSON.stringify({
           name,
           params:eventParams,
-          sentAt:new Date().toISOString()
+          sentAt:new Date().toISOString(),
+          via:"gtag"
         }));
         console.info("Yonda Analytics event queued:", name, eventParams);
         return true;
