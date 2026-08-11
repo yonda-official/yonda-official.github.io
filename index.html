@@ -4731,37 +4731,65 @@
         }
 
         const normalizedQuery=normalizeBookText(q);
+        const currentYear=new Date().getFullYear();
+
+        const publicationYear=(value)=>{
+          const match=String(value||"").match(/(?:19|20)\d{2}/);
+          return match?Number(match[0]):0;
+        };
+
+        const recencyScore=(year)=>{
+          if(!year) return 0;
+          const age=Math.max(0,currentYear-year);
+          if(age<=2) return 220;
+          if(age<=5) return 195;
+          if(age<=8) return 165;
+          if(age<=12) return 130;
+          if(age<=16) return 95;
+          if(age<=25) return 55;
+          return 15;
+        };
+
         const items=deduped
           .map((item,index)=>{
             const title=normalizeBookText(item.title||'');
             const author=normalizeBookText(item.author||'');
+
+            /* タイトル完全一致だけで古い本が独走しないよう、
+               一致度は重要だが、元APIの関連度と出版年も十分効く配点にする。 */
             let matchScore=0;
+            if(title===normalizedQuery) matchScore+=250;
+            else if(title.startsWith(normalizedQuery)) matchScore+=205;
+            else if(title.includes(normalizedQuery)) matchScore+=165;
 
-            if(title===normalizedQuery) matchScore+=1000;
-            else if(title.startsWith(normalizedQuery)) matchScore+=650;
-            else if(title.includes(normalizedQuery)) matchScore+=450;
-
-            if(author===normalizedQuery) matchScore+=220;
-            else if(author.includes(normalizedQuery)) matchScore+=140;
+            if(author===normalizedQuery) matchScore+=95;
+            else if(author.includes(normalizedQuery)) matchScore+=65;
 
             let completenessScore=0;
-            if(item.coverUrl) completenessScore+=16;
-            if(item.isbn) completenessScore+=14;
-            if(item.author) completenessScore+=10;
-            if(item.publisher) completenessScore+=6;
-            if(item.salesDate) completenessScore+=4;
-            if(Number(item.pages)>0) completenessScore+=3;
+            if(item.coverUrl) completenessScore+=22;
+            if(item.isbn) completenessScore+=20;
+            if(item.author) completenessScore+=14;
+            if(item.publisher) completenessScore+=10;
+            if(item.salesDate) completenessScore+=8;
+            if(Number(item.pages)>0) completenessScore+=5;
 
+            /* 楽天・Google等が返した元の関連度順を「知名度・流通量」の近似として重視。 */
             const sourceIndex=Number(item._sourceIndex)||0;
-            const sourceRank=Math.max(0,180-sourceIndex*4);
+            const sourceRank=Math.max(0,300-sourceIndex*7);
 
             let sourceBonus=0;
-            if(item._sourceType==="primary") sourceBonus=40;
-            else if(item._sourceType==="google") sourceBonus=24;
-            else if(item._sourceType==="google-title") sourceBonus=18;
-            else if(item._sourceType==="open-library") sourceBonus=10;
+            if(item._sourceType==="primary") sourceBonus=70;
+            else if(item._sourceType==="google") sourceBonus=50;
+            else if(item._sourceType==="google-title") sourceBonus=38;
+            else if(item._sourceType==="open-library") sourceBonus=22;
 
-            return {item,index,score:matchScore+completenessScore+sourceRank+sourceBonus};
+            const year=publicationYear(item.salesDate);
+            const freshness=recencyScore(year);
+
+            return {
+              item,index,year,
+              score:matchScore+sourceRank+sourceBonus+freshness+completenessScore
+            };
           })
           .sort((a,b)=>b.score-a.score||a.index-b.index)
           .slice(0,30)
@@ -4792,10 +4820,12 @@
           let footerHtml='';
           if(visibleCount<items.length){
             footerHtml=`<button type="button" id="showMoreBookResults" class="secondary" style="width:100%;margin-top:2px">さらに候補を表示（${Math.min(10,items.length-visibleCount)}件）</button>`;
-          }else if(items.length<30){
+          }else if(items.length>=30){
+            footerHtml='<div class="note" style="margin-top:8px;text-align:center">検索数の上限30件を表示しています。</div>';
+          }else{
             footerHtml=supplementalSucceeded
-              ? `<div class="note" style="margin-top:8px;text-align:center">重複を除いて検索できた候補は${items.length}件でした。</div>`
-              : `<div class="note" style="margin-top:8px;text-align:center">現在${items.length}件を表示しています。追加候補の取得に失敗しました。</div>`;
+              ? `<div class="note" style="margin-top:8px;text-align:center">検索できた候補は${items.length}件でした。</div>`
+              : `<div class="note" style="margin-top:8px;text-align:center">現在確認できる候補は${items.length}件です。</div>`;
           }
 
           box.innerHTML=resultHtml+footerHtml;
