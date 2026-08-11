@@ -2030,7 +2030,7 @@
       .bottom-nav{
         left:12px!important;
         right:auto!important;
-        bottom:2px!important;
+        bottom:0!important;
         transform:none!important;
         width:calc(100% - 84px)!important;
         max-width:none!important;
@@ -4607,65 +4607,77 @@
         const primaryItems=Array.isArray(data?.books)?data.books:[];
         let googleItems=[];
 
-        /* search-books側の返却数に依存せず、Google Booksをページ送りして補完する。
-           まず日本語結果の0-19件、次に20-39件を確認し、それでも不足する場合のみ
-           言語制限なしの関連結果も確認する。 */
-        if(primaryItems.length<30){
-          const toGoogleItems=(volumes,offset=0)=>volumes.map((volume,index)=>{
-            const info=volume?.volumeInfo||{};
-            const identifiers=Array.isArray(info.industryIdentifiers)?info.industryIdentifiers:[];
-            const isbn13=identifiers.find(x=>x?.type==="ISBN_13")?.identifier||"";
-            const isbn10=identifiers.find(x=>x?.type==="ISBN_10")?.identifier||"";
-            const cover=info.imageLinks?.thumbnail||info.imageLinks?.smallThumbnail||"";
-            return {
-              title:info.title||"",
-              author:Array.isArray(info.authors)?info.authors.join(" / "):"",
-              pages:Number(info.pageCount)||0,
-              tags:localizeBookCategories(info.categories||[]),
-              coverUrl:String(cover).replace(/^http:/,"https:"),
-              isbn:isbn13||isbn10,
-              publisher:info.publisher||"",
-              salesDate:info.publishedDate||"",
-              source:"google-books",
-              itemUrl:info.infoLink||"",
-              _sourceIndex:offset+index,
-              _sourceType:"google"
-            };
-          });
+        /* search-books側の返却件数が30件でも、その中に重複がある場合に備え、
+           Google Booksの日本語候補0-39件を補完候補として確認する。
+           最終的な上限30件は、すべてを重複除去・採点した後に決める。 */
+        const toGoogleItems=(volumes,offset=0)=>volumes.map((volume,index)=>{
+          const info=volume?.volumeInfo||{};
+          const identifiers=Array.isArray(info.industryIdentifiers)?info.industryIdentifiers:[];
+          const isbn13=identifiers.find(x=>x?.type==="ISBN_13")?.identifier||"";
+          const isbn10=identifiers.find(x=>x?.type==="ISBN_10")?.identifier||"";
+          const cover=info.imageLinks?.thumbnail||info.imageLinks?.smallThumbnail||"";
+          return {
+            title:info.title||"",
+            author:Array.isArray(info.authors)?info.authors.join(" / "):"",
+            pages:Number(info.pageCount)||0,
+            tags:localizeBookCategories(info.categories||[]),
+            coverUrl:String(cover).replace(/^http:/,"https:"),
+            isbn:isbn13||isbn10,
+            publisher:info.publisher||"",
+            salesDate:info.publishedDate||"",
+            source:"google-books",
+            itemUrl:info.infoLink||"",
+            _sourceIndex:offset+index,
+            _sourceType:"google"
+          };
+        });
 
-          try{
-            const firstPage=await fetchGoogleBooks(q,false,true,0,20);
-            googleItems.push(...toGoogleItems(firstPage,0));
+        try{
+          const firstPage=await fetchGoogleBooks(q,false,true,0,20);
+          googleItems.push(...toGoogleItems(firstPage,0));
 
-            const secondPage=await fetchGoogleBooks(q,false,true,20,20);
-            googleItems.push(...toGoogleItems(secondPage,20));
-
-            if(primaryItems.length+googleItems.length<30){
-              const unrestricted=await fetchGoogleBooks(q,false,false,0,20);
-              googleItems.push(...toGoogleItems(unrestricted,40));
-            }
-          }catch(googleError){
-            console.warn("Google Books supplemental search failed",googleError);
-          }
+          const secondPage=await fetchGoogleBooks(q,false,true,20,20);
+          googleItems.push(...toGoogleItems(secondPage,20));
+        }catch(googleError){
+          console.warn("Google Books supplemental search failed",googleError);
         }
 
-        const combined=[
+        let combined=[
           ...primaryItems.map((item,index)=>({...item,_sourceIndex:index,_sourceType:"primary"})),
           ...googleItems
         ];
 
-        const seen=new Set();
-        const deduped=combined.filter(item=>{
-          const normalizedIsbnKey=String(item.isbn||"").replace(/[\s-]/g,"").toLowerCase();
-          const titleKey=normalizeBookText(item.title||"");
-          const authorKey=normalizeBookText(item.author||"");
-          const key=normalizedIsbnKey
-            ? `isbn:${normalizedIsbnKey}`
-            : `book:${titleKey}|${authorKey}`;
-          if(!titleKey||seen.has(key)) return false;
-          seen.add(key);
-          return true;
-        });
+        const dedupeBookCandidates=(candidates)=>{
+          const seen=new Set();
+          return candidates.filter(item=>{
+            const normalizedIsbnKey=String(item.isbn||"").replace(/[\s-]/g,"").toLowerCase();
+            const titleKey=normalizeBookText(item.title||"");
+            const authorKey=normalizeBookText(item.author||"");
+            const key=normalizedIsbnKey
+              ? `isbn:${normalizedIsbnKey}`
+              : `book:${titleKey}|${authorKey}`;
+            if(!titleKey||seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+        };
+
+        let deduped=dedupeBookCandidates(combined);
+
+        /* 日本語候補を2ページ確認しても30件に届かない場合のみ、
+           言語制限なしの関連候補を追加し、もう一度重複除去する。 */
+        if(deduped.length<30){
+          try{
+            const unrestricted=await fetchGoogleBooks(q,false,false,0,20);
+            combined=[
+              ...combined,
+              ...toGoogleItems(unrestricted,40)
+            ];
+            deduped=dedupeBookCandidates(combined);
+          }catch(googleError){
+            console.warn("Google Books unrestricted supplemental search failed",googleError);
+          }
+        }
 
         if(!deduped.length){
           box.innerHTML='<div class="note">候補が見つかりませんでした。ISBNや著者名を追加して再検索するか、下の欄へ手入力してください。</div>';
