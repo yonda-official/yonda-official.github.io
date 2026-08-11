@@ -4568,7 +4568,7 @@
       });
     }
 
-    async function fetchGoogleBooks(query,exactTitle=false,restrictJapanese=true){
+    async function fetchGoogleBooks(query,exactTitle=false,restrictJapanese=true,startIndex=0,maxResults=40){
       const cleaned=query.trim();
       const isbn=cleaned.replace(/[\s-]/g,"");
       const isIsbn=/^(?:97[89])?\d{9}[\dXx]$/.test(isbn);
@@ -4582,7 +4582,8 @@
         q:searchTerm,
         printType:"books",
         orderBy:"relevance",
-        maxResults:"40",
+        startIndex:String(Math.max(0,Number(startIndex)||0)),
+        maxResults:String(Math.min(40,Math.max(1,Number(maxResults)||40))),
         projection:"full"
       });
       if(restrictJapanese) params.set("langRestrict","ja");
@@ -4606,32 +4607,43 @@
         const primaryItems=Array.isArray(data?.books)?data.books:[];
         let googleItems=[];
 
-        /* search-books側の返却が30件未満でも、断片的な検索語から候補を探しやすいよう
-           Google Booksの関連候補で不足分を補完する。 */
+        /* search-books側の返却数に依存せず、Google Booksをページ送りして補完する。
+           まず日本語結果の0-19件、次に20-39件を確認し、それでも不足する場合のみ
+           言語制限なしの関連結果も確認する。 */
         if(primaryItems.length<30){
+          const toGoogleItems=(volumes,offset=0)=>volumes.map((volume,index)=>{
+            const info=volume?.volumeInfo||{};
+            const identifiers=Array.isArray(info.industryIdentifiers)?info.industryIdentifiers:[];
+            const isbn13=identifiers.find(x=>x?.type==="ISBN_13")?.identifier||"";
+            const isbn10=identifiers.find(x=>x?.type==="ISBN_10")?.identifier||"";
+            const cover=info.imageLinks?.thumbnail||info.imageLinks?.smallThumbnail||"";
+            return {
+              title:info.title||"",
+              author:Array.isArray(info.authors)?info.authors.join(" / "):"",
+              pages:Number(info.pageCount)||0,
+              tags:localizeBookCategories(info.categories||[]),
+              coverUrl:String(cover).replace(/^http:/,"https:"),
+              isbn:isbn13||isbn10,
+              publisher:info.publisher||"",
+              salesDate:info.publishedDate||"",
+              source:"google-books",
+              itemUrl:info.infoLink||"",
+              _sourceIndex:offset+index,
+              _sourceType:"google"
+            };
+          });
+
           try{
-            const volumes=await fetchGoogleBooks(q,false,true);
-            googleItems=volumes.map((volume,index)=>{
-              const info=volume?.volumeInfo||{};
-              const identifiers=Array.isArray(info.industryIdentifiers)?info.industryIdentifiers:[];
-              const isbn13=identifiers.find(x=>x?.type==="ISBN_13")?.identifier||"";
-              const isbn10=identifiers.find(x=>x?.type==="ISBN_10")?.identifier||"";
-              const cover=info.imageLinks?.thumbnail||info.imageLinks?.smallThumbnail||"";
-              return {
-                title:info.title||"",
-                author:Array.isArray(info.authors)?info.authors.join(" / "):"",
-                pages:Number(info.pageCount)||0,
-                tags:localizeBookCategories(info.categories||[]),
-                coverUrl:String(cover).replace(/^http:/,"https:"),
-                isbn:isbn13||isbn10,
-                publisher:info.publisher||"",
-                salesDate:info.publishedDate||"",
-                source:"google-books",
-                itemUrl:info.infoLink||"",
-                _sourceIndex:index,
-                _sourceType:"google"
-              };
-            });
+            const firstPage=await fetchGoogleBooks(q,false,true,0,20);
+            googleItems.push(...toGoogleItems(firstPage,0));
+
+            const secondPage=await fetchGoogleBooks(q,false,true,20,20);
+            googleItems.push(...toGoogleItems(secondPage,20));
+
+            if(primaryItems.length+googleItems.length<30){
+              const unrestricted=await fetchGoogleBooks(q,false,false,0,20);
+              googleItems.push(...toGoogleItems(unrestricted,40));
+            }
           }catch(googleError){
             console.warn("Google Books supplemental search failed",googleError);
           }
@@ -4715,7 +4727,7 @@
           const moreHtml=visibleCount<items.length
             ? `<button type="button" id="showMoreBookResults" class="secondary" style="width:100%;margin-top:2px">さらに候補を表示（${Math.min(10,items.length-visibleCount)}件）</button>`
             : (items.length<30
-                ? `<div class="note" style="margin-top:8px;text-align:center">検索できる候補は${items.length}件でした。</div>`
+                ? `<div class="note" style="margin-top:8px;text-align:center">重複を除いて検索できる候補は${items.length}件でした。</div>`
                 : '');
           box.innerHTML=resultHtml+moreHtml;
 
