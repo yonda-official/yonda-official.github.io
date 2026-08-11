@@ -1971,7 +1971,7 @@
     }
 
   
-    /* v47: persistent add action integrated with bottom navigation */
+    /* 下部ナビ＋追加ボタン：過去の重複指定を最終表示値に統合 */
     .nav-add-button{
       border:0;
       background:var(--accent)!important;
@@ -1982,13 +1982,10 @@
       padding:0!important;
       box-shadow:0 8px 18px rgba(111,143,104,.22);
       z-index:2;
-    }
-    .nav-add-button b{
-      font-size:1.55rem!important;
-      line-height:1!important;
-      font-weight:500!important;
+      aspect-ratio:1/1!important;
     }
     .nav-add-button span{display:none}
+    .header-add-button{display:grid!important}
 
     @media(min-width:621px){
       .bottom-nav{
@@ -1996,324 +1993,82 @@
         gap:0!important;
         align-items:center!important;
         overflow:visible!important;
+        width:min(78vw,820px)!important;
+        max-width:820px!important;
+        min-height:auto!important;
+        height:auto!important;
+        padding:unset!important;
       }
-
-      /* Desktop: + is visually independent from the navigation bar. */
       .nav-add-button{
         position:absolute!important;
-        left:calc(100% + 12px)!important;
+        left:calc(100% + 14px)!important;
+        right:auto!important;
         top:50%!important;
+        bottom:auto!important;
         transform:translateY(-50%)!important;
-        width:44px!important;
-        height:44px!important;
+        width:54px!important;
+        height:54px!important;
+        min-width:54px!important;
+        min-height:54px!important;
+        max-width:54px!important;
+        max-height:54px!important;
         grid-column:auto!important;
         grid-row:auto!important;
         justify-self:auto!important;
       }
-
+      .nav-add-button b{
+        font-size:1.75rem!important;
+        line-height:1!important;
+        font-weight:500!important;
+      }
       .bottom-nav > button[data-section="homeSection"]{grid-column:1!important;grid-row:1!important}
       .bottom-nav > button[data-section="statsSection"]{grid-column:2!important;grid-row:1!important}
       .bottom-nav > button[data-section="aiSection"]{grid-column:3!important;grid-row:1!important}
-      .header-add-button{display:grid!important}
-    }
-
-    @media(max-width:620px){
-      .header-add-button{display:none!important}
-
-      .bottom-nav{
-        grid-template-columns:repeat(3,1fr)!important;
-        overflow:visible!important;
-      }
-
-      /* Mobile: move the floating + away from the center to the right side. */
-      .nav-add-button{
-        position:absolute!important;
-        left:auto!important;
-        right:12px!important;
-        top:-54px!important;
-        transform:none!important;
-        width:48px!important;
-        height:48px!important;
-      }
-
-      .bottom-nav > button[data-section="homeSection"]{grid-column:1!important}
-      .bottom-nav > button[data-section="statsSection"]{grid-column:2!important}
-      .bottom-nav > button[data-section="aiSection"]{grid-column:3!important}
-    }
-
-  
-    /* v49: align standalone + button height with bottom navigation */
-    @media(min-width:621px){
-      .bottom-nav{
-        width:min(94%,560px)!important;
-        padding:8px!important;
-        min-height:60px!important;
-      }
-
-      .nav-add-button{
-        left:calc(100% + 12px)!important;
-        top:0!important;
-        transform:none!important;
-        width:60px!important;
-        height:60px!important;
-        border-radius:18px!important;
-      }
-
-      .nav-add-button b{
-        font-size:1.75rem!important;
-      }
     }
 
     @media(max-width:620px){
       .bottom-nav{
         left:12px!important;
         right:auto!important;
+        bottom:6px!important;
         transform:none!important;
         width:calc(100% - 84px)!important;
         max-width:none!important;
-        min-height:54px!important;
+        min-height:auto!important;
+        height:auto!important;
         padding:6px!important;
         border-radius:18px!important;
+        grid-template-columns:repeat(3,1fr)!important;
+        overflow:visible!important;
       }
-
       .bottom-nav > button[data-section]{
         padding:7px 3px!important;
       }
-
       .nav-add-button{
         position:absolute!important;
         left:calc(100% + 10px)!important;
         right:auto!important;
-        top:0!important;
-        transform:none!important;
+        top:50%!important;
+        bottom:auto!important;
+        transform:translateY(-50%)!important;
         width:54px!important;
         height:54px!important;
-        border-radius:18px!important;
+        min-width:54px!important;
+        min-height:54px!important;
+        max-width:54px!important;
+        max-height:54px!important;
       }
-
       .nav-add-button b{
         font-size:1.65rem!important;
+        line-height:1!important;
+        font-weight:500!important;
       }
+      .bottom-nav > button[data-section="homeSection"]{grid-column:1!important}
+      .bottom-nav > button[data-section="statsSection"]{grid-column:2!important}
+      .bottom-nav > button[data-section="aiSection"]{grid-column:3!important}
     }
 
-  
-    /* v50: restore mobile header + and align standalone circular + with nav height */
 
-    /* Header + remains available on both desktop and mobile. */
-    .header-add-button{
-      display:grid!important;
-    }
-
-    .nav-add-button{
-      border-radius:50%!important;
-      aspect-ratio:1/1!important;
-      padding:0!important;
-    }
-
-    @media(min-width:621px){
-      .bottom-nav{
-        min-height:60px!important;
-        height:60px!important;
-        padding:8px!important;
-      }
-
-      .nav-add-button{
-        top:0!important;
-        bottom:auto!important;
-        width:60px!important;
-        height:60px!important;
-        min-width:60px!important;
-        min-height:60px!important;
-        border-radius:50%!important;
-      }
-    }
-
-    @media(max-width:620px){
-      .header-add-button{
-        display:grid!important;
-      }
-
-      .bottom-nav{
-        min-height:54px!important;
-        height:54px!important;
-        padding:6px!important;
-      }
-
-      .nav-add-button{
-        top:0!important;
-        bottom:auto!important;
-        width:54px!important;
-        height:54px!important;
-        min-width:54px!important;
-        min-height:54px!important;
-        border-radius:50%!important;
-      }
-    }
-
-  
-    /* v51: restore original nav sizing; only align standalone + height */
-
-    @media(min-width:621px){
-      /* Revert nav bar sizing to original */
-      .bottom-nav{
-        width:auto!important;
-        min-height:auto!important;
-        height:auto!important;
-        padding:unset!important;
-      }
-
-      /* Match + to the actual nav height without enlarging the nav */
-      .nav-add-button{
-        width:48px!important;
-        height:48px!important;
-        min-width:48px!important;
-        min-height:48px!important;
-        border-radius:50%!important;
-      }
-    }
-
-    @media(max-width:620px){
-      /* Revert nav sizing/layout changes */
-      .bottom-nav{
-        min-height:auto!important;
-        height:auto!important;
-      }
-
-      .nav-add-button{
-        width:48px!important;
-        height:48px!important;
-        min-width:48px!important;
-        min-height:48px!important;
-        border-radius:50%!important;
-      }
-    }
-
-  
-    /* v52: align standalone + button exactly to nav bar height */
-    @media(min-width:621px){
-      .nav-add-button{
-        width:44px!important;
-        height:44px!important;
-        min-width:44px!important;
-        min-height:44px!important;
-      }
-    }
-
-    @media(max-width:620px){
-      .nav-add-button{
-        width:44px!important;
-        height:44px!important;
-        min-width:44px!important;
-        min-height:44px!important;
-      }
-    }
-
-  
-    /* v53: extend only the bottom edge of the standalone + button */
-    @media(min-width:621px){
-      .nav-add-button{
-        width:44px!important;
-        height:52px!important;
-        min-width:44px!important;
-        min-height:52px!important;
-      }
-    }
-
-    @media(max-width:620px){
-      .nav-add-button{
-        width:44px!important;
-        height:52px!important;
-        min-width:44px!important;
-        min-height:52px!important;
-      }
-    }
-
-  
-    /* v54: true circular + button, 50px, vertically centered to nav bar */
-
-    @media(min-width:621px){
-      .nav-add-button{
-        width:50px!important;
-        height:50px!important;
-        min-width:50px!important;
-        min-height:50px!important;
-        max-width:50px!important;
-        max-height:50px!important;
-        border-radius:50%!important;
-
-        left:calc(100% + 12px)!important;
-        top:50%!important;
-        transform:translateY(-50%)!important;
-      }
-    }
-
-    @media(max-width:620px){
-      .nav-add-button{
-        width:50px!important;
-        height:50px!important;
-        min-width:50px!important;
-        min-height:50px!important;
-        max-width:50px!important;
-        max-height:50px!important;
-        border-radius:50%!important;
-
-        left:calc(100% + 10px)!important;
-        right:auto!important;
-        top:50%!important;
-        transform:translateY(-50%)!important;
-      }
-    }
-
-  
-    /* v55: increase standalone + button from 50px to 54px, keep center alignment */
-
-    @media(min-width:621px){
-      .nav-add-button{
-        width:54px!important;
-        height:54px!important;
-        min-width:54px!important;
-        min-height:54px!important;
-        max-width:54px!important;
-        max-height:54px!important;
-        border-radius:50%!important;
-
-        left:calc(100% + 12px)!important;
-        top:50%!important;
-        transform:translateY(-50%)!important;
-      }
-    }
-
-    @media(max-width:620px){
-      .nav-add-button{
-        width:54px!important;
-        height:54px!important;
-        min-width:54px!important;
-        min-height:54px!important;
-        max-width:54px!important;
-        max-height:54px!important;
-        border-radius:50%!important;
-
-        left:calc(100% + 10px)!important;
-        right:auto!important;
-        top:50%!important;
-        transform:translateY(-50%)!important;
-      }
-    }
-
-  
-    /* v56: desktop only - make bottom navigation wider */
-    @media(min-width:621px){
-      .bottom-nav{
-        width:min(78vw, 820px)!important;
-        max-width:820px!important;
-      }
-
-      .nav-add-button{
-        left:calc(100% + 14px)!important;
-      }
-    }
-
-  
     /* v59: simplify top area */
     .brand p{
       display:flex;
@@ -2739,7 +2494,7 @@
                   <li>本棚で本を開いて「Yonda?」をタップした日</li>
                 </ul>
               </li>
-              <li><strong>検索と自動入力</strong><br>タイトル・著者・表紙などを自動入力します。ページ数は取得できる場合に反映されます。</li>
+              <li><strong>検索と自動入力</strong><br>タイトル・著者名・ISBNから候補を検索し、タイトル・著者・表紙などを自動入力します。候補は関連度をもとに並べ、必要に応じて最大30件まで確認できます。ページ数は取得できる場合に反映されます。</li>
               <li><strong>振り返り</strong><br>カレンダーやマイダッシュボードで、自分の読書履歴や傾向を確認できます。</li>
               <li><strong>データ保存</strong><br>無料アカウントでは端末間同期を利用でき、JSON・CSVによるバックアップにも対応しています。</li>
             </ul>
@@ -2752,10 +2507,10 @@
           <div class="legal-content">
             <p class="legal-text"><strong>Supabase</strong><br>アカウント認証およびクラウド上の読書データ同期に利用します。</p>
             <p class="legal-text"><strong>楽天ウェブサービス（楽天ブックス）</strong><br>タイトル・著者名・ISBNから書籍情報を検索し、本の登録内容を自動入力するために利用します。</p>
-            <p class="legal-text"><strong>openBD・国立国会図書館サーチ・Open Library・Google Books</strong><br>ISBN、タイトル、著者名などからページ数その他の書誌情報を補完するために利用します。情報が取得できない場合や、版によって内容が異なる場合があります。</p>
+            <p class="legal-text"><strong>openBD・国立国会図書館サーチ・Open Library・Google Books</strong><br>ISBN、タイトル、著者名などからページ数その他の書誌情報を補完するために利用します。Google Booksは、書籍検索の候補が少ない場合の補完にも利用します。情報が取得できない場合や、版によって内容が異なる場合があります。</p>
             <p class="legal-text"><strong>Google Analytics</strong><br>利用状況の把握、不具合の調査およびサービス改善のために利用します。</p>
             <p class="legal-text"><strong>Googleフォーム</strong><br>お問い合わせの受付に利用します。送信された情報はGoogle LLCのサービス上で管理されます。</p>
-            <p class="legal-text"><strong>Google AdSense</strong><br>広告掲載開始後、サービス運営のための広告配信に利用する予定です。</p>
+            <p class="legal-text"><strong>Google AdSense</strong><br>サービス運営のための広告配信に利用します。</p>
           </div>
         </details>
 
@@ -2772,9 +2527,9 @@
             <p class="legal-text"><strong>1. 基本方針</strong><br>Yonda?（以下「本サービス」）は、個人情報の保護に関する法律その他の関係法令を踏まえ、ユーザーに関する情報を適切に取り扱います。</p>
             <p class="legal-text"><strong>2. 取得する情報</strong><br>メールアドレスその他の認証情報、読書記録（タイトル、著者、出版社、ISBN、表紙URL、状態、評価、ページ数、読了日、ジャンル・タグ、メモ、お気に入りの文章、本との出会い方等）、お問い合わせ内容、アクセス日時、端末・ブラウザ情報、IPアドレス、Cookieその他の識別子、操作履歴および不具合情報を取得する場合があります。</p>
             <p class="legal-text"><strong>3. 利用目的</strong><br>アカウント認証、サービス提供、端末間同期、データ保存・復元、お問い合わせ対応、不正利用防止、障害調査、利用状況の分析、品質改善、重要なお知らせおよび法令上必要な対応のために利用します。</p>
-            <p class="legal-text"><strong>4. 外部サービス</strong><br>本サービスは、認証・データ保存にSupabase、書籍検索に楽天ウェブサービス、openBD、国立国会図書館サーチ、Open Library、Google Books、アクセス解析にGoogle Analytics、お問い合わせ受付にGoogleフォームを利用します。送信された情報はGoogle LLCのサービス上で管理されます。広告掲載開始後はGoogle AdSenseを利用する場合があります。各サービスには、利用に必要な範囲で情報が送信されることがあります。</p>
+            <p class="legal-text"><strong>4. 外部サービス</strong><br>本サービスは、認証・データ保存にSupabase、書籍検索に楽天ウェブサービス、openBD、国立国会図書館サーチ、Open Library、Google Books、アクセス解析にGoogle Analytics、お問い合わせ受付にGoogleフォームを利用します。送信された情報はGoogle LLCのサービス上で管理されます。広告配信にGoogle AdSenseを利用します。各サービスには、利用に必要な範囲で情報が送信されることがあります。</p>
             <p class="legal-text"><strong>5. Google Analytics</strong><br>本サービスは、利用状況の把握と改善のためGoogle Analyticsを使用します。Google AnalyticsはCookie等を利用してアクセス情報を収集することがあり、収集された情報はGoogleの方針に基づいて管理されます。</p>
-            <p class="legal-text"><strong>6. Google AdSense・広告Cookie</strong><br>広告掲載開始後、Googleを含む第三者配信事業者はCookieを使用し、ユーザーによる本サービスまたは他のウェブサイトへの過去のアクセス情報に基づいて広告を配信する場合があります。Googleの広告Cookieにより、Googleおよびそのパートナーがユーザーのアクセス情報に基づく広告を表示することがあります。ユーザーはGoogleの広告設定等からパーソナライズ広告を管理または無効化できます。</p>
+            <p class="legal-text"><strong>6. Google AdSense・広告Cookie</strong><br>本サービスではGoogle AdSenseを利用しており、Googleを含む第三者配信事業者はCookieを使用し、ユーザーによる本サービスまたは他のウェブサイトへの過去のアクセス情報に基づいて広告を配信する場合があります。Googleの広告Cookieにより、Googleおよびそのパートナーがユーザーのアクセス情報に基づく広告を表示することがあります。ユーザーはGoogleの広告設定等からパーソナライズ広告を管理または無効化できます。</p>
             <p class="legal-text"><strong>7. Cookie・同意管理</strong><br>Cookie等は、ログイン状態の維持、セキュリティ、利用状況の分析および広告配信に使用される場合があります。法令またはGoogleのポリシー上必要な地域では、認定された同意管理プラットフォーム等を用いて、必要な情報提供および同意取得を行います。ブラウザ設定でCookieを無効にすると、一部機能が正常に動作しない場合があります。</p>
             <p class="legal-text"><strong>8. 第三者提供・委託</strong><br>法令に基づく場合等を除き、本人の同意なく個人データを第三者へ提供しません。ただし、サービス運営に必要な範囲で外部事業者へ取扱いを委託する場合があります。</p>
             <p class="legal-text"><strong>9. 国外の事業者</strong><br>Supabase、Googleその他国外の事業者が提供するサービスを利用するため、情報が国外のサーバー等で処理・保存される場合があります。</p>
@@ -2783,7 +2538,7 @@
             <p class="legal-text"><strong>12. 開示等の請求</strong><br>法令に基づく利用目的の通知、開示、訂正、追加、削除、利用停止等の請求は、Googleフォームから受け付けます。必要に応じて本人確認を行います。</p>
             <p class="legal-text"><strong>13. 未成年者</strong><br>未成年者が本サービスを利用する場合は、必要に応じて親権者等の同意を得てください。</p>
             <p class="legal-text"><strong>14. 改定</strong><br>本方針を改定する場合は、本サービス上で表示するなど適切な方法で通知します。</p>
-            <p class="policy-meta">制定日：2026年8月4日<br>最終改定日：2026年8月6日<br>お問い合わせ：Googleフォーム</p>
+            <p class="policy-meta">制定日：2026年8月4日<br>最終改定日：2026年8月11日<br>お問い合わせ：Googleフォーム</p>
           </div>
         </details>
         <details class="settings-card legal-details">
@@ -2824,7 +2579,7 @@
             <p class="legal-text"><strong>12. データのバックアップ</strong><br>障害、端末故障、ブラウザデータ削除その他の原因によりデータが失われる可能性があります。重要な記録はJSONまたはCSVで定期的にバックアップしてください。</p>
             <p class="legal-text"><strong>13. 規約の変更</strong><br>法令に従い、変更内容と効力発生日を本サービス上で周知します。変更後に本サービスを利用した場合、変更後の規約に同意したものとみなされることがあります。</p>
             <p class="legal-text"><strong>14. 準拠法・管轄</strong><br>本規約は日本法に準拠します。本サービスに関して紛争が生じた場合、東京地方裁判所または東京簡易裁判所を第一審の専属的合意管轄裁判所とします。ただし、消費者契約法その他の強行法規により別段の定めがある場合を除きます。</p>
-            <p class="policy-meta">制定日：2026年8月4日<br>最終改定日：2026年8月6日</p>
+            <p class="policy-meta">制定日：2026年8月4日<br>最終改定日：2026年8月11日</p>
           </div>
         </details>
         <details class="settings-card legal-details">
@@ -4842,16 +4597,71 @@
       const box=$("#bookSearchResults");
       if(!q){box.innerHTML='<div class="note">検索語を入力してください。</div>';return;}
       if(!supabaseClient){box.innerHTML='<div class="note">書籍検索サービスの設定が完了していません。</div>';return;}
-      box.innerHTML='<div class="note">楽天ブックスから検索中...</div>';
+      box.innerHTML='<div class="note">書籍を検索中...</div>';
       try{
         const {data,error}=await supabaseClient.functions.invoke('search-books',{body:{keyword:q,limit:30}});
         if(error) throw error;
         if(data?.error) throw new Error(data.error);
-        const rawItems=Array.isArray(data?.books)?data.books:[];
-        if(!rawItems.length){box.innerHTML='<div class="note">候補が見つかりませんでした。ISBNや著者名を追加して再検索するか、下の欄へ手入力してください。</div>';return;}
+
+        const primaryItems=Array.isArray(data?.books)?data.books:[];
+        let googleItems=[];
+
+        /* search-books側の返却が30件未満でも、断片的な検索語から候補を探しやすいよう
+           Google Booksの関連候補で不足分を補完する。 */
+        if(primaryItems.length<30){
+          try{
+            const volumes=await fetchGoogleBooks(q,false,true);
+            googleItems=volumes.map((volume,index)=>{
+              const info=volume?.volumeInfo||{};
+              const identifiers=Array.isArray(info.industryIdentifiers)?info.industryIdentifiers:[];
+              const isbn13=identifiers.find(x=>x?.type==="ISBN_13")?.identifier||"";
+              const isbn10=identifiers.find(x=>x?.type==="ISBN_10")?.identifier||"";
+              const cover=info.imageLinks?.thumbnail||info.imageLinks?.smallThumbnail||"";
+              return {
+                title:info.title||"",
+                author:Array.isArray(info.authors)?info.authors.join(" / "):"",
+                pages:Number(info.pageCount)||0,
+                tags:localizeBookCategories(info.categories||[]),
+                coverUrl:String(cover).replace(/^http:/,"https:"),
+                isbn:isbn13||isbn10,
+                publisher:info.publisher||"",
+                salesDate:info.publishedDate||"",
+                source:"google-books",
+                itemUrl:info.infoLink||"",
+                _sourceIndex:index,
+                _sourceType:"google"
+              };
+            });
+          }catch(googleError){
+            console.warn("Google Books supplemental search failed",googleError);
+          }
+        }
+
+        const combined=[
+          ...primaryItems.map((item,index)=>({...item,_sourceIndex:index,_sourceType:"primary"})),
+          ...googleItems
+        ];
+
+        const seen=new Set();
+        const deduped=combined.filter(item=>{
+          const normalizedIsbnKey=String(item.isbn||"").replace(/[\s-]/g,"").toLowerCase();
+          const titleKey=normalizeBookText(item.title||"");
+          const authorKey=normalizeBookText(item.author||"");
+          const key=normalizedIsbnKey
+            ? `isbn:${normalizedIsbnKey}`
+            : `book:${titleKey}|${authorKey}`;
+          if(!titleKey||seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+
+        if(!deduped.length){
+          box.innerHTML='<div class="note">候補が見つかりませんでした。ISBNや著者名を追加して再検索するか、下の欄へ手入力してください。</div>';
+          return;
+        }
 
         const normalizedQuery=normalizeBookText(q);
-        const items=rawItems
+        const items=deduped
           .map((item,index)=>{
             const title=normalizeBookText(item.title||'');
             const author=normalizeBookText(item.author||'');
@@ -4870,11 +4680,21 @@
             if(item.salesDate) completenessScore+=4;
             if(Number(item.pages)>0) completenessScore+=3;
 
-            return {item,index,score:matchScore+completenessScore};
+            /* 元APIの関連度順も残す。primary（楽天等）の順位をやや優先しつつ、
+               Google Booksの関連度順も補完候補の中で反映する。 */
+            const sourceRank=Math.max(0,180-(Number(item._sourceIndex)||0)*5);
+            const sourceBonus=item._sourceType==="primary"?35:0;
+
+            return {item,index,score:matchScore+completenessScore+sourceRank+sourceBonus};
           })
           .sort((a,b)=>b.score-a.score||a.index-b.index)
           .slice(0,30)
-          .map(entry=>entry.item);
+          .map(entry=>{
+            const item={...entry.item};
+            delete item._sourceIndex;
+            delete item._sourceType;
+            return item;
+          });
 
         let visibleCount=Math.min(10,items.length);
         const renderResults=()=>{
@@ -4910,7 +4730,7 @@
       }catch(error){
         console.error(error);
         logYondaError("book_search",error);
-        box.innerHTML='<div class="note">楽天ブックス検索に接続できませんでした。少し時間を置いて再検索するか、下の欄へ手入力してください。</div>';
+        box.innerHTML='<div class="note">書籍検索に接続できませんでした。少し時間を置いて再検索するか、下の欄へ手入力してください。</div>';
       }
     }
     function positivePageNumber(value){
