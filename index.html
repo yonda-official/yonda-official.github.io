@@ -4137,8 +4137,26 @@
       renderGenreSettings();
       $("#deleteBtn").style.visibility=book?"visible":"hidden";
       updateYondaButton();
-      $("#bookModal").classList.add("open");
-      $("#bookModal").setAttribute("aria-hidden","false");
+      const bookModal=$("#bookModal");
+      const bookSheet=bookModal.querySelector(".sheet");
+      const bookSearchInput=$("#bookSearchInput");
+
+      bookModal.classList.add("open");
+      bookModal.setAttribute("aria-hidden","false");
+
+      // 本の登録・編集画面は、開くたびに必ず先頭から表示する。
+      if(bookSheet) bookSheet.scrollTop=0;
+
+      // 新規登録時だけ検索欄を初期フォーカスにする。
+      // preventScrollでフォーカスによる位置ずれを防ぎ、iPhone等でも検索欄を入力状態にする。
+      if(!book && bookSearchInput){
+        try{
+          bookSearchInput.focus({preventScroll:true});
+        }catch(_error){
+          bookSearchInput.focus();
+        }
+        if(bookSheet) bookSheet.scrollTop=0;
+      }
     }
     function closeModal(){ $("#bookModal").classList.remove("open");$("#bookModal").setAttribute("aria-hidden","true"); }
     window.editBook=id=>openModal(books.find(b=>b.id===id));
