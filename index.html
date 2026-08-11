@@ -2030,7 +2030,7 @@
       .bottom-nav{
         left:12px!important;
         right:auto!important;
-        bottom:6px!important;
+        bottom:2px!important;
         transform:none!important;
         width:calc(100% - 84px)!important;
         max-width:none!important;
@@ -4714,7 +4714,9 @@
 
           const moreHtml=visibleCount<items.length
             ? `<button type="button" id="showMoreBookResults" class="secondary" style="width:100%;margin-top:2px">さらに候補を表示（${Math.min(10,items.length-visibleCount)}件）</button>`
-            : '';
+            : (items.length<30
+                ? `<div class="note" style="margin-top:8px;text-align:center">検索できる候補は${items.length}件でした。</div>`
+                : '');
           box.innerHTML=resultHtml+moreHtml;
 
           const moreButton=$("#showMoreBookResults");
