@@ -4844,24 +4844,69 @@
       if(!supabaseClient){box.innerHTML='<div class="note">書籍検索サービスの設定が完了していません。</div>';return;}
       box.innerHTML='<div class="note">楽天ブックスから検索中...</div>';
       try{
-        const {data,error}=await supabaseClient.functions.invoke('search-books',{body:{keyword:q}});
+        const {data,error}=await supabaseClient.functions.invoke('search-books',{body:{keyword:q,limit:30}});
         if(error) throw error;
         if(data?.error) throw new Error(data.error);
-        const items=Array.isArray(data?.books)?data.books:[];
-        if(!items.length){box.innerHTML='<div class="note">候補が見つかりませんでした。ISBNや著者名を追加して再検索するか、下の欄へ手入力してください。</div>';return;}
-        box.innerHTML=items.slice(0,10).map(item=>{
-          const cover=(item.coverUrl||'').replace(/^http:/,'https:');
-          const payload=encodeURIComponent(JSON.stringify({
-            title:item.title||'',author:item.author||'',pages:Number(item.pages)||0,
-            tags:Array.isArray(item.tags)?item.tags:[],coverUrl:cover,
-            isbn:item.isbn||'',publisher:item.publisher||'',salesDate:item.salesDate||'',source:item.source||'rakuten-books',sourceUrl:item.itemUrl||''
-          }));
-          return `<div class="search-result">
-            ${cover?`<img src="${escapeHtml(cover)}" alt="">`:`<div style="width:52px;height:68px;background:var(--panel-2);border-radius:8px;display:grid;place-items:center">📖</div>`}
-            <div><strong>${escapeHtml(item.title||'')}</strong><small>${escapeHtml(item.author||'著者不明')}${item.publisher?`・${escapeHtml(item.publisher)}`:''}${item.salesDate?`・${escapeHtml(item.salesDate)}`:''}</small></div>
-            <button type="button" onclick="selectSearchResult('${payload}')">選択</button>
-          </div>`;
-        }).join('');
+        const rawItems=Array.isArray(data?.books)?data.books:[];
+        if(!rawItems.length){box.innerHTML='<div class="note">候補が見つかりませんでした。ISBNや著者名を追加して再検索するか、下の欄へ手入力してください。</div>';return;}
+
+        const normalizedQuery=normalizeBookText(q);
+        const items=rawItems
+          .map((item,index)=>{
+            const title=normalizeBookText(item.title||'');
+            const author=normalizeBookText(item.author||'');
+            let matchScore=0;
+            if(title===normalizedQuery) matchScore+=1000;
+            else if(title.startsWith(normalizedQuery)) matchScore+=650;
+            else if(title.includes(normalizedQuery)) matchScore+=450;
+            if(author===normalizedQuery) matchScore+=220;
+            else if(author.includes(normalizedQuery)) matchScore+=140;
+
+            let completenessScore=0;
+            if(item.coverUrl) completenessScore+=16;
+            if(item.isbn) completenessScore+=14;
+            if(item.author) completenessScore+=10;
+            if(item.publisher) completenessScore+=6;
+            if(item.salesDate) completenessScore+=4;
+            if(Number(item.pages)>0) completenessScore+=3;
+
+            return {item,index,score:matchScore+completenessScore};
+          })
+          .sort((a,b)=>b.score-a.score||a.index-b.index)
+          .slice(0,30)
+          .map(entry=>entry.item);
+
+        let visibleCount=Math.min(10,items.length);
+        const renderResults=()=>{
+          const resultHtml=items.slice(0,visibleCount).map(item=>{
+            const cover=(item.coverUrl||'').replace(/^http:/,'https:');
+            const payload=encodeURIComponent(JSON.stringify({
+              title:item.title||'',author:item.author||'',pages:Number(item.pages)||0,
+              tags:Array.isArray(item.tags)?item.tags:[],coverUrl:cover,
+              isbn:item.isbn||'',publisher:item.publisher||'',salesDate:item.salesDate||'',source:item.source||'rakuten-books',sourceUrl:item.itemUrl||''
+            }));
+            return `<div class="search-result">
+              ${cover?`<img src="${escapeHtml(cover)}" alt="">`:`<div style="width:52px;height:68px;background:var(--panel-2);border-radius:8px;display:grid;place-items:center">📖</div>`}
+              <div><strong>${escapeHtml(item.title||'')}</strong><small>${escapeHtml(item.author||'著者不明')}${item.publisher?`・${escapeHtml(item.publisher)}`:''}${item.salesDate?`・${escapeHtml(item.salesDate)}`:''}</small></div>
+              <button type="button" onclick="selectSearchResult('${payload}')">選択</button>
+            </div>`;
+          }).join('');
+
+          const moreHtml=visibleCount<items.length
+            ? `<button type="button" id="showMoreBookResults" class="secondary" style="width:100%;margin-top:2px">さらに候補を表示（${Math.min(10,items.length-visibleCount)}件）</button>`
+            : '';
+          box.innerHTML=resultHtml+moreHtml;
+
+          const moreButton=$("#showMoreBookResults");
+          if(moreButton){
+            moreButton.addEventListener("click",()=>{
+              visibleCount=Math.min(visibleCount+10,items.length,30);
+              renderResults();
+            });
+          }
+        };
+
+        renderResults();
       }catch(error){
         console.error(error);
         logYondaError("book_search",error);
