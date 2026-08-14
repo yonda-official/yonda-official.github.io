@@ -4727,6 +4727,53 @@
         };
       });
 
+      /* 国立国会図書館サーチ：楽天・Google Books・Open Libraryで30件に満たない場合の最終補完 */
+      const fetchNdlBooks=async(query)=>{
+        const params=new URLSearchParams({
+          cnt:"30",
+          mediatype:"1",
+          any:query
+        });
+        const response=await fetch(`https://ndlsearch.ndl.go.jp/api/opensearch?${params.toString()}`,{
+          method:"GET",mode:"cors",credentials:"omit",cache:"no-store"
+        });
+        if(!response.ok) throw new Error(`NDL search failed: ${response.status}`);
+        const xmlText=await response.text();
+        const xml=new DOMParser().parseFromString(xmlText,"application/xml");
+        if(xml.querySelector("parsererror")) throw new Error("NDL returned invalid XML");
+        return [...xml.querySelectorAll("item")];
+      };
+
+      const ndlText=(item,names)=>{
+        for(const name of names){
+          const nodes=[...item.getElementsByTagName(name)];
+          const value=nodes.map(node=>String(node.textContent||"").trim()).find(Boolean);
+          if(value) return value;
+        }
+        return "";
+      };
+
+      const toNdlItems=(nodes)=>(nodes||[]).map((item,index)=>{
+        const identifiers=[...item.getElementsByTagName("dc:identifier"),...item.getElementsByTagName("identifier")].map(node=>String(node.textContent||"").trim());
+        const isbn=identifiers.map(v=>v.replace(/[\s-]/g,"")).find(v=>/^(?:97[89])?\d{9}[\dXx]$/.test(v))||"";
+        const link=ndlText(item,["link"]);
+        const extent=ndlText(item,["dcterms:extent","dc:format","format"]);
+        return {
+          title:ndlText(item,["dc:title","title"]),
+          author:ndlText(item,["dc:creator","dcndl:creator","creator"]),
+          pages:pageCountFromBibliographicText(extent),
+          tags:[],
+          coverUrl:"",
+          isbn,
+          publisher:ndlText(item,["dc:publisher","publisher"]),
+          salesDate:ndlText(item,["dc:date","dcterms:issued","date"]),
+          source:"ndl-search",
+          itemUrl:link,
+          _sourceIndex:index,
+          _sourceType:"ndl"
+        };
+      }).filter(item=>item.title);
+
       const dedupeBookCandidates=(candidates)=>{
         const seen=new Set();
         return (candidates||[]).filter(item=>{
@@ -4790,7 +4837,20 @@
           console.warn("Open Library supplemental search failed",supplementalResults[2]?.reason);
         }
 
-        const deduped=dedupeBookCandidates(combined);
+        let deduped=dedupeBookCandidates(combined);
+
+        /* 3サービスを統合しても30件未満なら、NDLサーチを最後の砦として追加する。 */
+        let ndlSucceeded=false;
+        if(deduped.length<30){
+          try{
+            const ndlNodes=await fetchNdlBooks(q);
+            combined.push(...toNdlItems(ndlNodes));
+            deduped=dedupeBookCandidates(combined);
+            ndlSucceeded=true;
+          }catch(ndlError){
+            console.warn("NDL supplemental search failed",ndlError);
+          }
+        }
 
         if(!deduped.length){
           box.innerHTML='<div class="note">候補が見つかりませんでした。ISBNや著者名を追加して再検索するか、下の欄へ手入力してください。</div>';
@@ -4849,6 +4909,7 @@
             else if(item._sourceType==="google") sourceBonus=50;
             else if(item._sourceType==="google-title") sourceBonus=38;
             else if(item._sourceType==="open-library") sourceBonus=22;
+            else if(item._sourceType==="ndl") sourceBonus=14;
 
             const year=publicationYear(item.salesDate);
             const freshness=recencyScore(year);
@@ -4879,7 +4940,7 @@
             }));
             return `<div class="search-result">
               ${cover?`<img src="${escapeHtml(cover)}" alt="">`:`<div style="width:52px;height:68px;background:var(--panel-2);border-radius:8px;display:grid;place-items:center">📖</div>`}
-              <div><strong>${escapeHtml(item.title||'')}</strong><small>${escapeHtml(item.author||'著者不明')}${item.publisher?`・${escapeHtml(item.publisher)}`:''}${item.salesDate?`・${escapeHtml(item.salesDate)}`:''}</small></div>
+              <div><strong>${escapeHtml(item.title||'')}</strong><small>${escapeHtml(item.author||'著者不明')}${item.publisher?`・${escapeHtml(item.publisher)}`:''}${item.salesDate?`・${escapeHtml(item.salesDate)}`:''}</small>${!cover&&item.source==="ndl-search"?'<small style="display:block;margin-top:3px">表紙画像は取得できませんでした</small>':''}</div>
               <button type="button" onclick="selectSearchResult('${payload}')">選択</button>
             </div>`;
           }).join('');
