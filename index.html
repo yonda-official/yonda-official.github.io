@@ -2501,7 +2501,7 @@
                   <li>本棚で本を開いて「Yonda?」をタップした日</li>
                 </ul>
               </li>
-              <li><strong>検索と自動入力</strong><br>タイトル・著者名・ISBNから候補を検索し、タイトル・著者・表紙などを自動入力します。候補は関連度をもとに並べ、必要に応じて最大30件まで確認できます。ページ数は取得できる場合に反映されます。</li>
+              <li><strong>検索と自動入力</strong><br>複数の書籍データを照合して候補を検索し、タイトル・著者・出版社・表紙などを自動入力します。候補は関連度などをもとに並べ、最大30件まで確認できます。ページ数は取得できる場合に複数の書誌データから補完します。</li>
               <li><strong>振り返り</strong><br>カレンダーやマイダッシュボードで、自分の読書履歴や傾向を確認できます。</li>
               <li><strong>データ保存</strong><br>無料アカウントでは端末間同期を利用でき、JSON・CSVによるバックアップにも対応しています。</li>
             </ul>
@@ -2512,10 +2512,12 @@
         <details class="settings-card legal-details">
           <summary>利用サービス</summary>
           <div class="legal-content">
-            <p class="legal-text"><strong>Supabase</strong><br>アカウント認証およびクラウド上の読書データ同期に利用します。</p>
-            <p class="legal-text"><strong>楽天ウェブサービス（楽天ブックス）</strong><br>タイトル・著者名・ISBNから書籍情報を検索し、本の登録内容を自動入力するために利用します。</p>
-            <p class="legal-text"><strong>openBD・国立国会図書館サーチ・Open Library・Google Books</strong><br>ISBN、タイトル、著者名などからページ数その他の書誌情報を補完するために利用します。Google Booksは、書籍検索の候補が少ない場合の補完にも利用します。情報が取得できない場合や、版によって内容が異なる場合があります。</p>
-            <p class="legal-text"><strong>Google Analytics</strong><br>利用状況の把握、不具合の調査およびサービス改善のために利用します。</p>
+            <p class="legal-text"><strong>Supabase</strong><br>アカウント認証、クラウド上の読書データ同期、書籍検索用のサーバー処理、および一部の利用状況計測の中継に利用します。</p>
+            <p class="legal-text"><strong>楽天ウェブサービス（楽天ブックス）</strong><br>日本の書籍情報を検索する主なデータソースとして利用します。品切れ・販売終了の商品を含む候補から、タイトル・著者・出版社・ISBN・表紙・発売日等を取得します。</p>
+            <p class="legal-text"><strong>Google Books</strong><br>楽天ブックスの検索結果を補完する書籍候補の検索と、ページ数・出版社・ISBN・表紙等の書誌情報の補完に利用します。</p>
+            <p class="legal-text"><strong>Open Library</strong><br>書籍候補の検索と、ISBN・ページ数・出版社・出版年・表紙等の書誌情報の補完に利用します。</p>
+            <p class="legal-text"><strong>openBD</strong><br>主にISBNをもとに、日本の書籍のページ数等の書誌情報を補完するために利用します。</p>
+            <p class="legal-text"><strong>Google Analytics</strong><br>利用状況の把握、不具合の調査およびサービス改善のために利用します。一部のアプリ内操作はSupabaseのサーバー処理を経由して送信します。</p>
             <p class="legal-text"><strong>Googleフォーム</strong><br>お問い合わせの受付に利用します。送信された情報はGoogle LLCのサービス上で管理されます。</p>
             <p class="legal-text"><strong>Google AdSense</strong><br>サービス運営のための広告配信に利用します。</p>
           </div>
@@ -2534,7 +2536,7 @@
             <p class="legal-text"><strong>1. 基本方針</strong><br>Yonda?（以下「本サービス」）は、個人情報の保護に関する法律その他の関係法令を踏まえ、ユーザーに関する情報を適切に取り扱います。</p>
             <p class="legal-text"><strong>2. 取得する情報</strong><br>メールアドレスその他の認証情報、読書記録（タイトル、著者、出版社、ISBN、表紙URL、状態、評価、ページ数、読了日、ジャンル・タグ、メモ、お気に入りの文章、本との出会い方等）、お問い合わせ内容、アクセス日時、端末・ブラウザ情報、IPアドレス、Cookieその他の識別子、操作履歴および不具合情報を取得する場合があります。</p>
             <p class="legal-text"><strong>3. 利用目的</strong><br>アカウント認証、サービス提供、端末間同期、データ保存・復元、お問い合わせ対応、不正利用防止、障害調査、利用状況の分析、品質改善、重要なお知らせおよび法令上必要な対応のために利用します。</p>
-            <p class="legal-text"><strong>4. 外部サービス</strong><br>本サービスは、認証・データ保存にSupabase、書籍検索に楽天ウェブサービス、openBD、国立国会図書館サーチ、Open Library、Google Books、アクセス解析にGoogle Analytics、お問い合わせ受付にGoogleフォームを利用します。送信された情報はGoogle LLCのサービス上で管理されます。広告配信にGoogle AdSenseを利用します。各サービスには、利用に必要な範囲で情報が送信されることがあります。</p>
+            <p class="legal-text"><strong>4. 外部サービス</strong><br>本サービスは、認証・データ保存・一部のサーバー処理にSupabase、書籍検索および書誌情報の補完に楽天ウェブサービス（楽天ブックス）、Google Books、Open Library、openBD、アクセス解析にGoogle Analytics、お問い合わせ受付にGoogleフォーム、広告配信にGoogle AdSenseを利用します。各サービスには、検索語、書籍のISBN・タイトル等を含め、各機能の提供に必要な範囲で情報が送信されることがあります。</p>
             <p class="legal-text"><strong>5. Google Analytics</strong><br>本サービスは、利用状況の把握と改善のためGoogle Analyticsを使用します。Google AnalyticsはCookie等を利用してアクセス情報を収集することがあり、収集された情報はGoogleの方針に基づいて管理されます。</p>
             <p class="legal-text"><strong>6. Google AdSense・広告Cookie</strong><br>本サービスではGoogle AdSenseを利用しており、Googleを含む第三者配信事業者はCookieを使用し、ユーザーによる本サービスまたは他のウェブサイトへの過去のアクセス情報に基づいて広告を配信する場合があります。Googleの広告Cookieにより、Googleおよびそのパートナーがユーザーのアクセス情報に基づく広告を表示することがあります。ユーザーはGoogleの広告設定等からパーソナライズ広告を管理または無効化できます。</p>
             <p class="legal-text"><strong>7. Cookie・同意管理</strong><br>Cookie等は、ログイン状態の維持、セキュリティ、利用状況の分析および広告配信に使用される場合があります。法令またはGoogleのポリシー上必要な地域では、認定された同意管理プラットフォーム等を用いて、必要な情報提供および同意取得を行います。ブラウザ設定でCookieを無効にすると、一部機能が正常に動作しない場合があります。</p>
@@ -2545,7 +2547,7 @@
             <p class="legal-text"><strong>12. 開示等の請求</strong><br>法令に基づく利用目的の通知、開示、訂正、追加、削除、利用停止等の請求は、Googleフォームから受け付けます。必要に応じて本人確認を行います。</p>
             <p class="legal-text"><strong>13. 未成年者</strong><br>未成年者が本サービスを利用する場合は、必要に応じて親権者等の同意を得てください。</p>
             <p class="legal-text"><strong>14. 改定</strong><br>本方針を改定する場合は、本サービス上で表示するなど適切な方法で通知します。</p>
-            <p class="policy-meta">制定日：2026年8月4日<br>最終改定日：2026年8月11日<br>お問い合わせ：Googleフォーム</p>
+            <p class="policy-meta">制定日：2026年8月4日<br>最終改定日：2026年8月15日<br>お問い合わせ：Googleフォーム</p>
           </div>
         </details>
         <details class="settings-card legal-details">
@@ -4727,53 +4729,6 @@
         };
       });
 
-      /* 国立国会図書館サーチ：楽天・Google Books・Open Libraryで30件に満たない場合の最終補完 */
-      const fetchNdlBooks=async(query)=>{
-        const params=new URLSearchParams({
-          cnt:"30",
-          mediatype:"1",
-          any:query
-        });
-        const response=await fetch(`https://ndlsearch.ndl.go.jp/api/opensearch?${params.toString()}`,{
-          method:"GET",mode:"cors",credentials:"omit",cache:"no-store"
-        });
-        if(!response.ok) throw new Error(`NDL search failed: ${response.status}`);
-        const xmlText=await response.text();
-        const xml=new DOMParser().parseFromString(xmlText,"application/xml");
-        if(xml.querySelector("parsererror")) throw new Error("NDL returned invalid XML");
-        return [...xml.querySelectorAll("item")];
-      };
-
-      const ndlText=(item,names)=>{
-        for(const name of names){
-          const nodes=[...item.getElementsByTagName(name)];
-          const value=nodes.map(node=>String(node.textContent||"").trim()).find(Boolean);
-          if(value) return value;
-        }
-        return "";
-      };
-
-      const toNdlItems=(nodes)=>(nodes||[]).map((item,index)=>{
-        const identifiers=[...item.getElementsByTagName("dc:identifier"),...item.getElementsByTagName("identifier")].map(node=>String(node.textContent||"").trim());
-        const isbn=identifiers.map(v=>v.replace(/[\s-]/g,"")).find(v=>/^(?:97[89])?\d{9}[\dXx]$/.test(v))||"";
-        const link=ndlText(item,["link"]);
-        const extent=ndlText(item,["dcterms:extent","dc:format","format"]);
-        return {
-          title:ndlText(item,["dc:title","title"]),
-          author:ndlText(item,["dc:creator","dcndl:creator","creator"]),
-          pages:pageCountFromBibliographicText(extent),
-          tags:[],
-          coverUrl:"",
-          isbn,
-          publisher:ndlText(item,["dc:publisher","publisher"]),
-          salesDate:ndlText(item,["dc:date","dcterms:issued","date"]),
-          source:"ndl-search",
-          itemUrl:link,
-          _sourceIndex:index,
-          _sourceType:"ndl"
-        };
-      }).filter(item=>item.title);
-
       const dedupeBookCandidates=(candidates)=>{
         const seen=new Set();
         return (candidates||[]).filter(item=>{
@@ -4838,19 +4793,6 @@
         }
 
         let deduped=dedupeBookCandidates(combined);
-
-        /* 3サービスを統合しても30件未満なら、NDLサーチを最後の砦として追加する。 */
-        let ndlSucceeded=false;
-        if(deduped.length<30){
-          try{
-            const ndlNodes=await fetchNdlBooks(q);
-            combined.push(...toNdlItems(ndlNodes));
-            deduped=dedupeBookCandidates(combined);
-            ndlSucceeded=true;
-          }catch(ndlError){
-            console.warn("NDL supplemental search failed",ndlError);
-          }
-        }
 
         if(!deduped.length){
           box.innerHTML='<div class="note">候補が見つかりませんでした。ISBNや著者名を追加して再検索するか、下の欄へ手入力してください。</div>';
@@ -4940,7 +4882,7 @@
             }));
             return `<div class="search-result">
               ${cover?`<img src="${escapeHtml(cover)}" alt="">`:`<div style="width:52px;height:68px;background:var(--panel-2);border-radius:8px;display:grid;place-items:center">📖</div>`}
-              <div><strong>${escapeHtml(item.title||'')}</strong><small>${escapeHtml(item.author||'著者不明')}${item.publisher?`・${escapeHtml(item.publisher)}`:''}${item.salesDate?`・${escapeHtml(item.salesDate)}`:''}</small>${!cover&&item.source==="ndl-search"?'<small style="display:block;margin-top:3px">表紙画像は取得できませんでした</small>':''}</div>
+              <div><strong>${escapeHtml(item.title||'')}</strong><small>${escapeHtml(item.author||'著者不明')}${item.publisher?`・${escapeHtml(item.publisher)}`:''}${item.salesDate?`・${escapeHtml(item.salesDate)}`:''}</small></div>
               <button type="button" onclick="selectSearchResult('${payload}')">選択</button>
             </div>`;
           }).join('');
@@ -5048,44 +4990,6 @@
       return [...root.querySelectorAll("*")]
         .filter(node=>names.has(String(node.localName||"").toLowerCase()))
         .map(node=>String(node.textContent||"").trim()).filter(Boolean);
-    }
-
-    async function fetchNdlPageDiagnostic(metadata){
-      const isbn13=normalizedIsbn(metadata?.isbn);
-      const isbn10=isbn13To10(isbn13);
-      const clean=v=>String(v||"").replace(/["\\]/g," ").trim();
-      const plans=[];
-      if(isbn13) plans.push({query:`isbn="${isbn13}"`,method:"ISBN-13"});
-      if(isbn10) plans.push({query:`isbn="${isbn10}"`,method:"ISBN-10"});
-      if(metadata?.title&&metadata?.author) plans.push({query:`title="${clean(metadata.title)}" AND creator="${clean(metadata.author)}"`,method:"タイトル＋著者"});
-      if(metadata?.title&&metadata?.publisher) plans.push({query:`title="${clean(metadata.title)}" AND publisher="${clean(metadata.publisher)}"`,method:"タイトル＋出版社"});
-      if(metadata?.title) plans.push({query:`title="${clean(metadata.title)}"`,method:"タイトル"});
-      let best=null, lastError="";
-      for(const plan of plans){
-        const controller=new AbortController();
-        const timer=setTimeout(()=>controller.abort(),10000);
-        try{
-          const params=new URLSearchParams({operation:"searchRetrieve",version:"1.2",maximumRecords:"20",recordSchema:"dcndl",query:plan.query});
-          const response=await fetch(`https://ndlsearch.ndl.go.jp/api/sru?${params.toString()}`,{signal:controller.signal,headers:{Accept:"application/xml,text/xml"}});
-          if(!response.ok){lastError=`HTTP ${response.status}`;continue;}
-          const xml=new DOMParser().parseFromString(await response.text(),"application/xml");
-          const records=[...xml.querySelectorAll("recordData")];
-          for(const record of records){
-            const titles=xmlValues(record,["title"]), creators=xmlValues(record,["creator"]), publishers=xmlValues(record,["publisher"]);
-            const identifiers=xmlValues(record,["identifier","isbn"]).map(normalizedIsbn).filter(v=>v.length===10||v.length===13);
-            const dates=xmlValues(record,["date","issued"]);
-            const extents=xmlValues(record,["extent","description","format"]);
-            const pages=extents.map(pageCountFromBibliographicText).find(Boolean)||0;
-            if(!pages) continue;
-            const score=metadataMatchScore({title:titles[0],author:creators.join(" "),publisher:publishers[0],date:dates[0],isbns:identifiers},metadata);
-            const candidate=diagnosticResult("NDL Search",pages,`${plan.method}検索・一致度 ${score}`,score,plan.method);
-            if(!best||candidate.score>best.score) best=candidate;
-          }
-        }catch(error){lastError=error?.name==="AbortError"?"タイムアウト":String(error?.message||error);}
-        finally{clearTimeout(timer);}
-        if(best?.score>=900) break;
-      }
-      return best||diagnosticResult("NDL Search",0,lastError||"該当レコードにページ数なし");
     }
 
     function findOpenBdPageCount(record){
@@ -5211,10 +5115,14 @@
 
     async function fetchPageCandidates(metadata){
       const settled=await Promise.allSettled([
-        fetchOpenBdPageDiagnostic(metadata),fetchNdlPageDiagnostic(metadata),fetchOpenLibraryPageDiagnostic(metadata),fetchGoogleBooksPageDiagnostic(metadata)
+        fetchOpenBdPageDiagnostic(metadata),
+        fetchOpenLibraryPageDiagnostic(metadata),
+        fetchGoogleBooksPageDiagnostic(metadata)
       ]);
-      const names=["openBD","NDL Search","Open Library","Google Books"];
-      const results=settled.map((item,index)=>item.status==="fulfilled"?item.value:diagnosticResult(names[index],0,String(item.reason?.message||item.reason||"エラー")));
+      const names=["openBD","Open Library","Google Books"];
+      const results=settled.map((item,index)=>item.status==="fulfilled"
+        ? item.value
+        : diagnosticResult(names[index],0,String(item.reason?.message||item.reason||"エラー")));
       const decision=choosePageResult(results);
       return {results,decision};
     }
