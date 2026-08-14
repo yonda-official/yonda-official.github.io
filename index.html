@@ -603,6 +603,14 @@
       overflow-y:auto;
       padding-bottom:8px;
     }
+    .all-books-controls{
+      display:grid;
+      gap:8px;
+      margin-bottom:10px;
+    }
+    .all-books-controls .filters{
+      margin:0;
+    }
     @media(max-width:620px){
       .bookshelf-only-sheet{width:100%}
       .bookshelf-full .shelf-row{
@@ -2372,7 +2380,7 @@
             <tr><td>Yomitai! / Yonderu! / Yonda! 管理</td><td>○</td><td>○</td></tr>
             <tr><td>評価・メモ・引用</td><td>○</td><td>○</td></tr>
             <tr><td>マイダッシュボード</td><td>○</td><td>○</td></tr>
-            <tr><td>CSV・JSON出力</td><td>○</td><td>○</td></tr>
+            <tr><td>バックアップ保存・CSV出力</td><td>○</td><td>○</td></tr>
             <tr><td>AI読書傾向分析</td><td>×</td><td>○</td></tr>
             <tr><td>AIによる次の一冊提案</td><td>×</td><td>○</td></tr>
           </tbody>
@@ -2419,6 +2427,20 @@
           <button class="ghost" id="closeAllBooksModal">閉じる</button>
         </div>
       </div>
+
+      <div class="all-books-controls">
+        <div class="search-row">
+          <input class="field" id="allBooksSearchInput" placeholder="タイトル・著者名で検索" />
+          <button class="secondary" id="clearAllBooksSearch" type="button">クリア</button>
+        </div>
+        <div class="filters" id="allBooksFilters">
+          <button class="chip active" data-filter="all">すべて</button>
+          <button class="chip" data-filter="want">Yomitai!</button>
+          <button class="chip" data-filter="reading">Yonderu!</button>
+          <button class="chip" data-filter="done">Yonda!</button>
+        </div>
+      </div>
+
       <div class="bookshelf bookshelf-full" id="allBookList"></div>
     </div>
   </div>
@@ -2478,9 +2500,9 @@
           <h4>データ管理</h4>
           <p class="note">端末変更や万一のデータ消失に備えて、定期的なバックアップをおすすめします。</p>
           <div class="settings-actions">
-            <button class="secondary" id="jsonExportBtn" type="button">JSON出力</button>
-            <button class="secondary" id="jsonImportBtn" type="button">JSON復元</button>
-            <button class="secondary" id="csvExportBtn" type="button">CSV出力</button>
+            <button class="secondary" id="jsonExportBtn" type="button">バックアップを保存</button>
+            <button class="secondary" id="jsonImportBtn" type="button">バックアップから復元</button>
+            <button class="secondary" id="csvExportBtn" type="button">CSVで書き出す</button>
           </div>
           <input id="jsonImportInput" type="file" accept="application/json,.json" hidden />
         </section>
@@ -3530,8 +3552,21 @@
         </div>`;
     }
 
+    let allBooksFilter="all";
+
+    function allBooksFilteredBooks(){
+      const query=String($("#allBooksSearchInput")?.value||"").trim().toLowerCase();
+      return shelfOrderedBooks().filter(book=>{
+        const matchesFilter=allBooksFilter==="all" || book.status===allBooksFilter;
+        if(!matchesFilter) return false;
+        if(!query) return true;
+        const hay=[book.title,book.author,(book.tags||[]).join(" ")].join(" ").toLowerCase();
+        return hay.includes(query);
+      });
+    }
+
     function renderAllBookshelf(){
-      const data=filteredBooks();
+      const data=allBooksFilteredBooks();
       $("#allBooksCount").textContent=`全${data.length}冊`;
       $("#allBookList").innerHTML=data.length
         ? renderShelfRows(data)
@@ -4381,6 +4416,12 @@
       $("#settingsModal").setAttribute("aria-hidden","true");
     }
     function openAllBooksModal(){
+      allBooksFilter="all";
+      const allBooksSearch=$("#allBooksSearchInput");
+      if(allBooksSearch) allBooksSearch.value="";
+      $$("#allBooksFilters .chip").forEach(button=>{
+        button.classList.toggle("active",button.dataset.filter==="all");
+      });
       renderAllBookshelf();
       $("#allBooksModal").classList.add("open");
       $("#allBooksModal").setAttribute("aria-hidden","false");
@@ -4407,6 +4448,20 @@
     $("#closeReorderModal").onclick=closeReorderModal;
     $("#allBooksModal").addEventListener("click",e=>{
       if(e.target.id==="allBooksModal") closeAllBooksModal();
+    });
+    $("#allBooksSearchInput")?.addEventListener("input",renderAllBookshelf);
+    $("#clearAllBooksSearch")?.addEventListener("click",()=>{
+      $("#allBooksSearchInput").value="";
+      renderAllBookshelf();
+    });
+    $$("#allBooksFilters .chip").forEach(button=>{
+      button.addEventListener("click",()=>{
+        allBooksFilter=button.dataset.filter||"all";
+        $$("#allBooksFilters .chip").forEach(item=>{
+          item.classList.toggle("active",item===button);
+        });
+        renderAllBookshelf();
+      });
     });
     $("#reorderModal").addEventListener("click",e=>{
       if(e.target.id==="reorderModal") closeReorderModal();
@@ -5264,6 +5319,11 @@
     $("#settingsSignupBtn").onclick=()=>{setAuthMode("signup");openAuthModal();};
     $("#settingsAuthBtn").onclick=async()=>{
       if(currentUser&&supabaseClient){
+        const shouldLogout=confirm(
+          "ログアウトしますか？\n\nこの端末では本棚が非表示になりますが、クラウド上の読書データは削除されません。再ログインすると同期されます。"
+        );
+        if(!shouldLogout) return;
+
         const {error:signOutError}=await supabaseClient.auth.signOut();
         if(signOutError){
           alert("ログアウトできませんでした。通信状態を確認してください。");
