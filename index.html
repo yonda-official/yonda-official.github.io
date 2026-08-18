@@ -26,8 +26,7 @@
 <meta name="description"
       content="読んだ本や心に残った文章を、自分だけの本棚として記録し、振り返るための読書記録サービスです。" />
 
-<link rel="canonical"
-      href="https://yonda-official.github.io/" />
+<link rel="canonical" href="https://yonda-official.github.io/" />
 
 <link rel="icon"
       type="image/png"
@@ -2217,7 +2216,21 @@
     button:not(.book-spine):not(.shelf-book){
       justify-content:center;
     }
-</style>
+
+    /* AdSense再審査向け公開情報。既存の本棚操作を邪魔しない控えめな表示 */
+    .public-intro-card{margin-top:18px}
+    .public-intro-copy{margin:0;color:var(--muted);font-size:.78rem;line-height:1.85}
+    .public-intro-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .public-page-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text)}
+    .public-legal-link{text-decoration:none;color:inherit}
+    #aiSection[hidden]{display:none!important}
+    @media(max-width:620px){
+      .public-intro-card{margin-top:14px;padding:15px}
+      .public-intro-actions{display:grid;grid-template-columns:1fr}
+      .public-intro-actions .public-page-link{width:100%}
+    }
+
+  </style>
 </head>
 <body>
   <main class="app">
@@ -2308,6 +2321,24 @@
           </div>
         </aside>
       </div>
+
+      <section class="panel public-intro-card" aria-labelledby="publicIntroTitle">
+        <div class="panel-head">
+          <div>
+            <h3 id="publicIntroTitle">Yonda?について</h3>
+            <span class="tiny">自分だけの本棚を育てる読書管理アプリ</span>
+          </div>
+        </div>
+        <p class="public-intro-copy">
+          Yonda?は、読みたい本・読書中の本・読み終えた本を一つの本棚で記録し、
+          読書の軌跡をカレンダーやマイダッシュボードで振り返るための無料の読書管理アプリです。
+          本を登録することだけでなく、心に残った文章や本との出会い方まで、自分の記録として長く残すことを大切にしています。
+        </p>
+        <div class="public-intro-actions">
+          <a class="secondary public-page-link" href="./about.html">Yonda?について詳しく見る</a>
+          <a class="secondary public-page-link" href="./guide.html">使い方を見る</a>
+        </div>
+      </section>
     </section>
 
     <section id="statsSection" class="section">
@@ -2338,7 +2369,7 @@
       </div>
     </section>
 
-    <section id="aiSection" class="section">
+    <section id="aiSection" class="section" hidden aria-hidden="true">
       <div class="panel">
         <div class="coming-soon-card">
           <span class="plan-chip pro">Yonda? Pro</span>
@@ -2352,9 +2383,10 @@
 
   <footer class="public-legal-footer" aria-label="サービス情報">
     <div class="public-legal-links">
-      <button class="public-legal-link" type="button" data-open-legal="aboutSection">Yonda?について</button>
-      <button class="public-legal-link" type="button" data-open-legal="privacySection">プライバシーポリシー</button>
-      <button class="public-legal-link" type="button" data-open-legal="termsSection">利用規約</button>
+      <a class="public-legal-link" href="./about.html">Yonda?について</a>
+      <a class="public-legal-link" href="./guide.html">使い方</a>
+      <a class="public-legal-link" href="./privacy.html">プライバシーポリシー</a>
+      <a class="public-legal-link" href="./terms.html">利用規約</a>
       <button class="public-legal-link" type="button" data-open-legal="contactSection">お問い合わせ</button>
     </div>
     <div>© 2026 Yonda?</div>
@@ -2364,7 +2396,7 @@
     <button class="nav-add-button" id="navAddBtn" type="button" aria-label="本を追加"><b>＋</b><span>本を追加</span></button>
     <button class="active" data-section="homeSection"><b class="nav-svg-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 5.5h4v13H4zM10 4h4v14.5h-4zM16 6.5h4v12h-4zM3 19.5h18"/></svg></b>ホーム</button>
     <button data-section="statsSection"><b class="nav-svg-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 18V6M4 18h16M6.5 15l4-4 3 2 5-6"/></svg></b>マイダッシュボード</button>
-    <button data-section="aiSection"><b>✦</b>AI分析</button>
+    
   </nav>
 
   <div class="modal" id="planModal" aria-hidden="true">
@@ -2515,6 +2547,19 @@
           <input id="jsonImportInput" type="file" accept="application/json,.json" hidden />
         </section>
 
+
+
+        <details class="settings-card legal-details" id="guideSection">
+          <summary>使い方</summary>
+          <div class="legal-content">
+            <p class="legal-text"><strong>1. 本を登録する</strong><br>画面上部または下部の「＋ 本を追加」から登録画面を開きます。本のタイトルを検索すると、取得できた書誌情報からタイトル・著者・出版社・表紙・ページ数などを自動入力できます。見つからない場合や内容を調整したい場合は手入力もできます。</p>
+            <p class="legal-text"><strong>2. 読書状況を記録する</strong><br>Yomitai!（読みたい）、Yonderu!（読書中）、Yonda!（読了）から現在の状態を選びます。評価、ジャンル・タグ、一言メモ、お気に入りの文章、本との出会い方も一緒に残せます。</p>
+            <p class="legal-text"><strong>3. 本棚を育てる</strong><br>登録した本はホームの本棚に並びます。「本の並び替え」から好きな順番に変更でき、11冊目以降は「すべてを表示」から確認できます。</p>
+            <p class="legal-text"><strong>4. Yonda!カレンダーで振り返る</strong><br>読了日と、本棚で本を開いて「Yonda?」を押した日がカレンダーに記録されます。</p>
+            <p class="legal-text"><strong>5. マイダッシュボードで振り返る</strong><br>月別のYonda!冊数・ページ数、ジャンル構成、読書状況、評価、本との出会い方などを確認できます。</p>
+            <p class="legal-text"><strong>6. データを守る</strong><br>無料アカウントでログインすると読書データをクラウドに保存し、PCとiPhoneなど複数端末で同期できます。設定からバックアップ保存やCSV出力も利用できます。</p>
+          </div>
+        </details>
 
         <details class="settings-card legal-details" id="aboutSection">
           <summary>Yonda?について</summary>
