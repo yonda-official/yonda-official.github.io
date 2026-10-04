@@ -4203,6 +4203,8 @@
 
     function openModal(book=null){
       currentEditId=book?.id||null;
+      const bookSearchBox=document.querySelector("#bookForm .book-search-box");
+      if(bookSearchBox) bookSearchBox.hidden=Boolean(book);
       $("#modalTitle").textContent=book?"本を編集":"本を追加";
       $("#bookId").value=book?.id||"";
       $("#title").value=book?.title||"";
