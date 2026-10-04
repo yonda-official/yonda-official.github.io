@@ -2250,7 +2250,32 @@
       .public-intro-actions .public-page-link{width:100%}
     }
 
-  </style>
+  
+    /* Frame title alignment: keep every framed section title at the same inset. */
+    .panel,
+    .settings-card{
+      padding-top:18px!important;
+      padding-left:18px!important;
+      padding-right:18px!important;
+    }
+    #homeSection .side-stack > .panel{
+      padding-top:18px!important;
+      padding-left:18px!important;
+      padding-right:18px!important;
+    }
+
+    @media(max-width:620px){
+      .panel,
+      .settings-card,
+      .public-intro-card,
+      #homeSection .side-stack > .panel,
+      #homeSection .yonda-calendar-panel{
+        padding-top:15px!important;
+        padding-left:15px!important;
+        padding-right:15px!important;
+      }
+    }
+</style>
 </head>
 <body>
   <main class="app">
