@@ -924,14 +924,34 @@
     .dashboard-controls select{width:auto}
     #dashboardYearSelect{min-width:104px}
     @media(max-width:620px){
-      .dashboard-controls{
-        width:100%;
+      #statsSection .panel-head{
         display:grid;
-        grid-template-columns:1fr 1fr;
+        grid-template-columns:minmax(0,1fr) auto;
+        grid-template-areas:
+          "title year"
+          "type type";
+        align-items:center;
+        gap:10px 8px;
       }
-      .dashboard-controls select{
+      #statsSection .panel-head > h3{
+        grid-area:title;
+        min-width:0;
+        white-space:nowrap;
+      }
+      .dashboard-controls{
+        display:contents;
+      }
+      #dashboardYearSelect{
+        grid-area:year;
+        width:auto!important;
+        min-width:96px!important;
+        max-width:112px;
+      }
+      #chartTypeSelect{
+        grid-area:type;
         width:100%!important;
         min-width:0!important;
+        max-width:100%;
       }
     }
 
@@ -3993,11 +4013,13 @@
       const avg=rated.reduce((s,b)=>s+Number(b.rating),0)/(rated.length||1);
 
       $("#dashboardSummary").textContent =
-        `${selectedYear}年のYonda!：${yearDone.length}冊\n`+
-        `${selectedYear}年のYonda!ページ：${yearPages.toLocaleString()}ページ\n`+
-        `年間平均評価：${rated.length?avg.toFixed(1):"未評価"} / 5\n\n`+
-        `全登録：${books.length}冊\n`+
-        `全期間のYonda!：${done.length}冊\n`+
+        `${selectedYear}年\n`+
+        `Yonda!：${yearDone.length}冊\n`+
+        `Yonda!ページ：${yearPages.toLocaleString()}ページ\n`+
+        `平均評価：${rated.length?avg.toFixed(1):"未評価"} / 5\n\n`+
+        `すべて\n`+
+        `登録：${books.length}冊\n`+
+        `Yonda!：${done.length}冊\n`+
         `Yonderu!：${books.filter(b=>b.status==="reading").length}冊\n`+
         `Yomitai!：${books.filter(b=>b.status==="want").length}冊`;
     }
