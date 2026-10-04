@@ -2251,18 +2251,71 @@
     }
 
   
-    /* Frame title alignment: keep every framed section title at the same inset. */
+    /* Unified frame rhythm and typography — Yonda! calendar is the reference. */
     .panel,
-    .settings-card{
-      padding-top:18px!important;
-      padding-left:18px!important;
-      padding-right:18px!important;
+    .settings-card,
+    .public-intro-card{
+      padding-top:11px!important;
+      padding-left:12px!important;
+      padding-right:12px!important;
     }
-    #homeSection .side-stack > .panel{
-      padding-top:18px!important;
-      padding-left:18px!important;
-      padding-right:18px!important;
+    #homeSection .side-stack > .panel,
+    #homeSection .yonda-calendar-panel{
+      padding-top:11px!important;
+      padding-left:12px!important;
+      padding-right:12px!important;
     }
+
+    /* Titles use one visual baseline independent of controls placed beside them. */
+    .panel-head{
+      align-items:flex-start!important;
+      margin-bottom:10px;
+    }
+    #homeSection .side-stack > .panel .panel-head,
+    #homeSection .yonda-calendar-panel .panel-head{
+      margin-bottom:6px!important;
+    }
+    #statsSection .panel-head > h3{
+      align-self:flex-start!important;
+      padding-top:0!important;
+    }
+
+    /* Primary frame titles */
+    .panel h3,
+    .sheet-head h3{
+      margin:0;
+      font-size:1.04rem!important;
+      line-height:1.35!important;
+      font-weight:700!important;
+      letter-spacing:0;
+    }
+
+    /* Settings section titles: consistent secondary heading level. */
+    .settings-card > h4,
+    .settings-card > summary{
+      margin:0 0 10px!important;
+      font-size:.92rem!important;
+      line-height:1.4!important;
+      font-weight:700!important;
+      color:var(--text)!important;
+    }
+    .settings-card > summary{
+      margin-bottom:0!important;
+    }
+    .settings-card[open] > summary{
+      margin-bottom:10px!important;
+    }
+
+    /* Supporting text follows one quieter scale without changing functional controls. */
+    .tiny,
+    .note,
+    .settings-card .legal-text,
+    .settings-card .policy-meta{
+      line-height:1.65;
+    }
+    .tiny{font-size:.72rem}
+    .note{font-size:.76rem}
+    .settings-card .legal-text{font-size:.75rem}
 
     @media(max-width:620px){
       .panel,
@@ -2270,9 +2323,23 @@
       .public-intro-card,
       #homeSection .side-stack > .panel,
       #homeSection .yonda-calendar-panel{
-        padding-top:15px!important;
-        padding-left:15px!important;
-        padding-right:15px!important;
+        padding-top:12px!important;
+        padding-left:12px!important;
+        padding-right:12px!important;
+      }
+      .panel h3,
+      .sheet-head h3{
+        font-size:.98rem!important;
+        line-height:1.35!important;
+      }
+      .settings-card > h4,
+      .settings-card > summary{
+        font-size:.90rem!important;
+      }
+      .panel-head{margin-bottom:9px}
+      #homeSection .side-stack > .panel .panel-head,
+      #homeSection .yonda-calendar-panel .panel-head{
+        margin-bottom:6px!important;
       }
     }
 </style>
